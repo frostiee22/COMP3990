@@ -1,0 +1,27 @@
+{
+  "name": "bower",
+  "version": "0.0.0",
+  "homepage": "https://github.com/frostiee22/MEWRAPI",
+  "authors": [
+    "frostiee22 <mkalloo42@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ngmap": "~1.7.11",
+    "jquery": "~2.1.4",
+    "modernizer": "~2.8.2",
+    "bootstrap": "~3.3.5",
+    "datatables": "~1.10.7",
+    "highcharts": "~4.1.7"
+  },
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.0.0"
+  }
+}
