@@ -28,7 +28,7 @@ connection.connect(function (err) {
     console.log("Successfully connected to the database");
 });
 
-connection.query("SELECT * FROM `stats`", function (err, rows) {
+connection.query('SELECT * FROM `stats` limit ' + 0 + ',' + 5, function (err, rows) {
 	if (err) { return err; } 
 	else { data = rows; }
 });
