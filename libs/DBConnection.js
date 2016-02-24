@@ -39,7 +39,7 @@ connection.connect(function (err) {
 module.exports = {
     'returnDBConnection': function(){
     	return connection;
-    }
+    },
     'allData' : function(){
         return data;
     }
