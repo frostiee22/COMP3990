@@ -1,6 +1,7 @@
 var mysql = require("mysql"),
     connection,
-    data = {};
+    data = {},
+    players = {};
 
 //local database
 // connection = mysql.createConnection({
@@ -36,6 +37,13 @@ connection.query("SELECT * FROM `stats`", function (err, rows) {
 });
 
 
+connection.query("SELECT DISTINCT Player_Forename, DISTINCT Player_Surname FROM `stats`", function(err, rows){
+    if (err)
+            throw err;
+        players = rows;
+});
+
+
 
 module.exports = {
     'returnDBConnection': function(){
@@ -43,5 +51,8 @@ module.exports = {
     },
     'allData' : function(){
         return data;
+    },
+    'players' : function(){
+        return players;
     }
 }
