@@ -27,7 +27,7 @@ app.all('*', function (req, res, next) {
 
 app.get ('/api/stats/all',function(req,res){
 	res.json(DBACCESS.allData);
-})
+});
 
 app.get('/api/stats/:start/:end', function (req, res) {
     var start = req.param("start"),
