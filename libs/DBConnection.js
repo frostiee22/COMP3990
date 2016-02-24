@@ -29,14 +29,11 @@ connection.connect(function (err) {
 });
 
 
-//every 15 minutes
-setInterval(function () {
-    connection.query('SELECT * FROM `stats`', function (err, rows) {
+connection.query("SELECT * FROM `stats`", function (err, rows) {
         if (err)
             throw err;
         data = rows;
-    });
-}, 900000);
+});
 
 
 
