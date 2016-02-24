@@ -28,11 +28,15 @@ connection.connect(function (err) {
     console.log("Successfully connected to the database");
 });
 
-connection.query('SELECT * FROM `stats` limit ' + 0 + ',' + 5, function (err, rows) {
-	if (err) { return err; } 
-	else { data = rows; }
-});
 
+//every 15 minutes
+setInterval(function () {
+    connection.query('SELECT * FROM `stats`', function (err, rows) {
+        if (err)
+            throw err;
+        data = rows;
+    });
+}, 900000);
 
 
 
