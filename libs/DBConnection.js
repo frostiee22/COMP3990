@@ -37,7 +37,7 @@ connection.query("SELECT * FROM `stats`", function (err, rows) {
 });
 
 
-connection.query("SELECT DISTINCT Player_Forename, DISTINCT Player_Surname FROM `stats`", function(err, rows){
+connection.query("SELECT DISTINCT Player_Forename, Player_Surname FROM `stats`", function(err, rows){
     if (err)
             throw err;
         players = rows;
