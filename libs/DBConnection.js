@@ -27,9 +27,22 @@ connection.connect(function (err) {
     console.log("Successfully connected to the database");
 });
 
+var data;
+connection.query('SELECT * FROM `stats`', function (err, rows) {
+		        if (err) {
+		            return err;
+		        } else {
+		            res.json(rows);
+		            data = rows;
+		        }
+		    });
+
 
 module.exports = {
     'returnDBConnection': function(){
     	return connection;
+    }
+    'allData' : function(){
+        return data;
     }
 }
