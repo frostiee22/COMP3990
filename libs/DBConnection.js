@@ -32,7 +32,6 @@ connection.query('SELECT * FROM `stats`', function (err, rows) {
 		        if (err) {
 		            return err;
 		        } else {
-		            res.json(rows);
 		            data = rows;
 		        }
 		    });
