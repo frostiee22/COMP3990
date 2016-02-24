@@ -45,9 +45,7 @@ app.get('/api/stats/player/:firstname/:lastname', function(req, res){
 		            res.json(rows);
 		        }
 		    });
-	
-	SELECT * FROM `stats` WHERE Player_Forename = "Vassiriki" and Player_Surname ="Abou_Diaby"
-})
+});
 
 app.get('/api/stats/:start/:end', function (req, res) {
     var start = req.param("start"),
