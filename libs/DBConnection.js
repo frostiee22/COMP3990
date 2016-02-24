@@ -1,6 +1,6 @@
 var mysql = require("mysql"),
     connection,
-    data = [];
+    data = {};
 
 //local database
 // connection = mysql.createConnection({
@@ -26,11 +26,11 @@ connection.connect(function (err) {
         return;
     }
     console.log("Successfully connected to the database");
-    
-    connection.query("SELECT * FROM `stats`", function (err, rows) {
+});
+
+connection.query("SELECT * FROM `stats`", function (err, rows) {
 	if (err) { return err; } 
 	else { data = rows; }
-     });
 });
 
 
