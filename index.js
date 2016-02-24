@@ -33,6 +33,22 @@ app.get ('/api/stats/players',function(req,res){
 	res.json(DBACCESS.players());
 });
 
+
+app.get('/api/stats/player/:firstname/:lastname', function(req, res){
+	var firstname = req.param("firstname"),
+            lastname = req.param("lastname");
+            
+            connection.query("SELECT * FROM `stats` WHERE Player_Forename = '"+firstname+"' and Player_Surname ='"+lastname+"';", function (err, rows) {
+		        if (err) {
+		            return err;
+		        } else {
+		            res.json(rows);
+		        }
+		    });
+	
+	SELECT * FROM `stats` WHERE Player_Forename = "Vassiriki" and Player_Surname ="Abou_Diaby"
+})
+
 app.get('/api/stats/:start/:end', function (req, res) {
     var start = req.param("start"),
         end = req.param("end");
