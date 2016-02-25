@@ -39,7 +39,7 @@ app.get ('/api/stats/players',function(req,res){
 
 app.get('/api/stats/goals/:num', function(req,res){
 	var num = req.param("num");
-	connection.query("SELECT * FROM stats ORDER BY `Goals` DESC limit '0'," + num, function(err, rows){
+	connection.query("SELECT * FROM stats ORDER BY `Goals` DESC limit 0," + num, function(err, rows){
     		if (err)
                   throw err;
                 res.json(rows);
