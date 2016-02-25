@@ -37,6 +37,15 @@ app.get ('/api/stats/players',function(req,res){
 	});
 });
 
+app.get('/api/stats/:sql', function(req,res){
+	var sql = req.param("sql");
+	connection.query(sql, function(err, rows){
+    		if (err)
+                  throw err;
+                res.json(rows);
+	});	
+});
+
 
 app.get('/api/stats/player/:firstname/:lastname', function(req, res){
 	var firstname = req.param("firstname"),
