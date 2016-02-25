@@ -173,20 +173,3 @@ function itemDetails(barcode) {
 }
 
 
-function MostGoals(stats) {
-    var goals = {
-        labels: [stats[0].Player_Forename +" "+ stats[0].Player_Surname,stats[1].Player_Forename +" "+ stats[1].Player_Surname,stats[2].Player_Forename +" "+ stats[2].Player_Surname,stats[3].Player_Forename +" "+ stats[3].Player_Surname,stats[4].Player_Forename +" "+ stats[4].Player_Surname],
-        datasets: [
-            {
-                fillColor: "rgba(151,187,205,0)",
-                strokeColor: "#e67e22",
-                pointColor: "rgba(151,187,205,0)",
-                pointStrokeColor: "#e67e22",
-                data: [stats[0].Goals, stats[1].Goals, stats[2].Goals, stats[3].Goals, stats[4].Goals]
-            }
-        ]
-    };
-return goals;
-}
-
-

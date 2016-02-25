@@ -1,8 +1,10 @@
 <ion-view title="Home ">
     <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="homeCtrl">
-        <h2>Most Goals</h2>
-        <div class="list card">
-            <canvas linechart responsive=true options="options" data="goals" height="auto"></canvas>
+        <div class="item item-divider">
+            Top Goal Scorers
+        </div>
+        <div class="item item-text-wrap">
+            <canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" series="series" options="{showTooltips: true}"></canvas>
         </div>
         <div class="spacer" style="width: 283px; height: 62px;"></div>
         <h2>Top Players</h2>

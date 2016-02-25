@@ -53,15 +53,19 @@ angular.module('app.controllers', [])
     .controller('homeCtrl', ['$scope', '$http', 'TopGoals', function ($scope, $http, TopGoals) {
         console.log("homeCtrl");
         TopGoals.all().then(
-            function (res) {
-                var data = MostGoals(res);
-                console.log(data);
-                $scope.goals = data;
+            function (stats) {
+                $scope.labels = [stats[0].Player_Surname, stats[1].Player_Surname, stats[2].Player_Surname, stats[3].Player_Surname, stats[4].Player_Surname];
+                $scope.series = ['Goals'];
+                $scope.data = [
+                    [stats[0].Goals, stats[1].Goals, stats[2].Goals, stats[3].Goals, stats[4].Goals]
+                ];
             },
             function (err) {
                 console.error(err);
             }
             );
+
+
 
 
     }])
