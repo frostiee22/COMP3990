@@ -30,11 +30,11 @@ connection.connect(function (err) {
 });
 
 
-connection.query("SELECT * FROM `stats`", function (err, rows) {
-        if (err)
-            throw err;
-        data = rows;
-});
+// connection.query("SELECT * FROM `stats`", function (err, rows) {
+//         if (err)
+//             throw err;
+//         data = rows;
+// });
 
 
 // connection.query("SELECT DISTINCT Player_Forename , Player_Surname from stats ORDER BY `stats`.`Player_Surname` ASC", function(err, rows){
