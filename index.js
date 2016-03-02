@@ -51,6 +51,8 @@ app.get('/api/stats/player/:firstname/:lastname', function(req, res){
 	var firstname = req.param("firstname"),
             lastname = req.param("lastname");
             
+            if (firstname != "-1"){
+            firstname = "";
             connection.query("SELECT * FROM `stats` WHERE Player_Forename = '"+firstname+"' and Player_Surname ='"+lastname+"' ORDER BY `Goals` DESC;", function (err, rows) {
 		        if (err) {
 		            return err;
@@ -58,6 +60,15 @@ app.get('/api/stats/player/:firstname/:lastname', function(req, res){
 		            res.json(rows);
 		        }
 		    });
+            }else {
+            	connection.query("SELECT * FROM `stats` WHERE Player_Forename = '"+firstname+"' and Player_Surname ='"+lastname+"' ORDER BY `Goals` DESC;", function (err, rows) {
+		        if (err) {
+		            return err;
+		        } else {
+		            res.json(rows);
+		        }
+		    });
+            }
 });
 
 app.get('/api/stats/:start/:end', function (req, res) {
