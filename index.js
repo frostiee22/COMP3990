@@ -51,7 +51,7 @@ app.get('/api/stats/player/:firstname/:lastname', function(req, res){
 	var firstname = req.param("firstname"),
             lastname = req.param("lastname");
             
-            if (firstname != "-1"){
+            if (firstname != "[fname]"){
             connection.query("SELECT * FROM `stats` WHERE Player_Forename = '"+firstname+"'  and Player_Surname ='"+lastname+"' ORDER BY `Goals` DESC;", function (err, rows) {
 		        if (err) {
 		            return err;
