@@ -23,7 +23,6 @@ angular.module('app.services', [])
                 .get("http://uwiproject.herokuapp.com/api/stats/players")
                 .success(function (response) {
                     //caching data
-                    console.log(response);
                     Save(response, "items");
                     d.resolve(response);
                 })
@@ -39,15 +38,12 @@ angular.module('app.services', [])
 
     .factory('ItemDetails', function ($http, $timeout, $q) {
         var results = {};
-
         function _all() {
             var d = $q.defer();
-
             $http
                 .get("http://uwiproject.herokuapp.com/api/stats/player/" + item.Player_Forename + "/" + item.Player_Surname)
                 .success(function (response) {
                     //caching data
-                    console.log(response);
                     Save(response, "player");
                     d.resolve(response);
                 })
@@ -96,7 +92,6 @@ angular.module('app.services', [])
 // saving data to a given key
 function Save(data, key) {
     console.log("Attempting to save: " + key);
-    console.log(data);
     var DataStored = localStorage.getItem(key);
     if (!DataStored) DataStored = [];
     else DataStored = JSON.parse(DataStored);

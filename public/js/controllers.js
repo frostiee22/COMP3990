@@ -29,6 +29,9 @@ angular.module('app.controllers', [])
         $scope.details = function () {
             item = {};
             item = this.item;
+            if (item.Player_Forename == ""){
+                   item.Player_Forename = "[fname]";
+            }
         }
     }])
 
