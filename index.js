@@ -95,7 +95,7 @@ app.get('/api/stats/:start/:end', function (req, res) {
 
 
 // getting table rows
-app.get('/api/stats/:table', function (req, res) {
+app.get('/api/:table', function (req, res) {
     var table = req.param("table"),
 	    connection.query('SELECT * FROM `'+table+'`', function (err, rows) {
 	        if (err) {
