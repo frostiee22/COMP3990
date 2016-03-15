@@ -94,6 +94,20 @@ app.get('/api/stats/:start/:end', function (req, res) {
 });
 
 
+// getting table rows
+app.get('/api/stats/:table', function (req, res) {
+    var table = req.param("table"),
+	    connection.query('SELECT * FROM '`+table+'`', function (err, rows) {
+	        if (err) {
+	            return err;
+	        } else {
+	            res.json(rows);
+	        }
+	    });
+	
+});
+
+
 
 app.listen(app.get('port'), function () {
    console.log("Node app is running at localhost:" + app.get('port'));
