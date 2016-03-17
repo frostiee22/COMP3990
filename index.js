@@ -116,83 +116,39 @@ app.get('/api/:table', function (req, res) {
 
 app.post('/Coach', function (req, res) {
 
-  var fstream, data = {};
-  req.pipe(req.busboy);
+  var data = {};
+  data.lname = req.body.lname;
+  data.fname = req.body.fname;
 
-  // saving the vales in the text field of the form
-  req.busboy.on('field', function (fieldname, val) {
-    if (fieldname == 'fname')
-      data.fname = val;
-    else if (fieldname == 'lname')
-      data.lname = val;
-  });
-  
- req.busboy.on('file', function (fieldname, file, filename) {
-    console.log(comment);
-    if (filename != "") {
-      console.log("Uploading: " + filename);
-
-      if (data.fname != [] || data.lname != []) {
-         //data
-      } else {
-        res.redirect('http://uwiproject.herokuapp.com/#/page1/page2');
-      }
-    }else{
-      console.log("picture isn't uploaded\n");
-      res.redirect('http://uwiproject.herokuapp.com/#/page1/page2');
-    }
-  }); 
-
+  res.redirect('/#/page1/page2');
 });
 
 
 
 app.post('/Match', function (req, res) {
 
-  var fstream, data = {};
-  req.pipe(req.busboy);
+  var data = {};
+  data.playerid = req.body.playerid;
+  data.gameid = req.body.gameid;
 
-  // saving the vales in the text field of the form
-  req.busboy.on('field', function (fieldname, val) {
-    if (fieldname == 'playerid')
-      data.playerid = val;
-    else if (fieldname == 'gameid')
-      data.gmaeid = val;
-  });
 
 });
 
 app.post('/Player', function (req, res) {
 
-  var fstream, data = {}, full, thumb;
-  req.pipe(req.busboy);
-
-  // saving the vales in the text field of the form
-  req.busboy.on('field', function (fieldname, val) {
-    if (fieldname == 'fname')
-      data.fname = val;
-    else if (fieldname == 'lname')
-      data.lname = val;
-     else if (fieldname == 'position')
-      data.position = val;
-     else if (fieldname == 'teamid')
-      data.teamid = val;
-  });
+ var data = {};
+  data.lname = req.body.lname;
+  data.fname = req.body.fname;
+  data.position = req.body.position;
+  data.teamid = req.body.teamid;
 
 });
 
 app.post('/Team', function (req, res) {
 
-  var fstream, data = {}, full, thumb;
-  req.pipe(req.busboy);
-
-  // saving the vales in the text field of the form
-  req.busboy.on('field', function (fieldname, val) {
-    if (fieldname == 'coachid')
-      data.coachid = val;
-    else if (fieldname == 'tname')
-      data.tname = val;
-  });
+ var data = {};
+  data.coachid = req.body.coachid;
+  data.tname = req.body.tname;
 
 });
 
