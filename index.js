@@ -6,14 +6,14 @@ var dataDir = "./libs/",
 
 var express = require('express'), 	// Import the required library
 	app = express(),
-	busyboy = require('connect-busyboy'),
+	busyboy = require('connect-busboy'),
     	fs = require('fs'),
 	bodyParser = require('body-parser'), // Initialize new instance of an application									
 	connection = DBACCESS.returnDBConnection();					
 
 
 app.set('port', (process.env.PORT || 5000));
-app.use(busyboy());
+app.use(busboy());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}))
 
