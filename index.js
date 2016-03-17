@@ -119,8 +119,7 @@ app.post('/Coach', function (req, res) {
   var data = {};
   data.lname = req.body.lname;
   data.fname = req.body.fname;
-
-  res.redirect('/#/page1/page2');
+  
 });
 
 
