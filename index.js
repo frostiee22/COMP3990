@@ -13,6 +13,7 @@ var express = require('express'), 	// Import the required library
 
 
 app.set('port', (process.env.PORT || 5000));
+app.use(busyboy());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}))
 
