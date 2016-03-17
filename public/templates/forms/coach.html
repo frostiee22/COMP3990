@@ -1,0 +1,26 @@
+<ion-view title="Coach Form">
+    <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="enterCtrl">
+
+        <form name="form" method="POST" action="http://uwiproject.herokuapp.com/Coach" enctype="multipart/form-data" class="css-form"
+        novalidate>
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">First Name</span>
+                    <input type="text" name="fname" placeholder="First Name">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Last Name</span>
+                    <input type="text" name="lname" placeholder="Last Name">
+                </label>
+                
+                <input type="file" name="file" id="file" />
+
+                <button class="button button-block button-positive">
+                    Submit
+                </button>
+            </div>
+        </form>
+
+    </ion-content>
+</ion-view>

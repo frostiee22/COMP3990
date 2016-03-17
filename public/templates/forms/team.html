@@ -1,0 +1,24 @@
+<ion-view title="Team Form">
+    <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="enterCtrl">
+
+        <form name="form" method="POST" action="http://uwiproject.herokuapp.com/Team" enctype="multipart/form-data" class="css-form"
+        novalidate>
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Coach ID</span>
+                    <input type="text" name="coachid" placeholder="Coach ID">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label" t>Team Name</span>
+                    <input type="text" name="tname" placeholder="Team Name">
+                </label>
+
+                <button class="button button-block button-positive">
+                    Submit
+                </button>
+            </div>
+        </form>
+
+    </ion-content>
+</ion-view>

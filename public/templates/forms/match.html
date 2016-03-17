@@ -1,0 +1,74 @@
+<ion-view title="Match Form">
+    <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="enterCtrl">
+
+        <form name="form" method="POST" action="http://uwiproject.herokuapp.com/Match" enctype="multipart/form-data" class="css-form" novalidate>
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Player Id</span>
+                    <input type="text" name="playerid" placeholder="Player ID">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Game Id</span>
+                    <input type="text" name="gameid" placeholder="Game Id">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Goals</span>
+                    <input type="text" name="goals" placeholder="Goals">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Succesful Passes</span>
+                    <input type="text" placeholder="Succesful Passes">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Unsuccesful Passes</span>
+                    <input type="text" placeholder="Unuccesful Passes">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Touches</span>
+                    <input type="text" placeholder="Touches">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Duels Won</span>
+                    <input type="text" placeholder="Duels Won">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Duels Lost</span>
+                    <input type="text" placeholder="Dules Lost">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Handballs Conceded</span>
+                    <input type="text" placeholder="Handballs Conceded">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Penalties Conceded</span>
+                    <input type="text" placeholder="Penalties Conceded">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Yellow Card(s)</span>
+                    <input type="text" placeholder="Yellow Card(s)">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Red Card(s)</span>
+                    <input type="text" placeholder="Red Card(s)">
+                </label>
+
+
+                <button class="button button-block button-positive">
+                    Submit
+                </button>
+            </div>
+        </form>
+
+    </ion-content>
+</ion-view>

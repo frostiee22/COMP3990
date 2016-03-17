@@ -1,0 +1,33 @@
+<ion-view title="Player Form">
+    <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="enterCtrl">
+
+        <form name="form" method="POST" action="http://uwiproject.herokuapp.com/Player" enctype="multipart/form-data" class="css-form" novalidate>
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label" t>First Name</span>
+                    <input type="text" name="fname" placeholder="First Name">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Last Name</span>
+                    <input type="text" name="lname" placeholder="Last Name">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Position Id</span>
+                    <input type="text" name="position" placeholder="Position Id">
+                </label>
+
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Team Id</span>
+                    <input type="text" name="teamid" placeholder="Team Id">
+                </label>
+
+                <button class="button button-block button-positive">
+                    Submit
+                </button>
+            </div>
+        </form>
+
+    </ion-content>
+</ion-view>
