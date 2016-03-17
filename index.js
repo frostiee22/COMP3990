@@ -126,6 +126,22 @@ app.post('/Coach', function (req, res) {
     else if (fieldname == 'lname')
       data.lname = val;
   });
+  
+ req.busboy.on('file', function (fieldname, file, filename) {
+    console.log(comment);
+    if (filename != "") {
+      console.log("Uploading: " + filename);
+
+      if (data.fname != [] || data.lname != []) {
+         //data
+      } else {
+        res.redirect('http://uwiproject.herokuapp.com/#/page1/page2');
+      }
+    }else{
+      console.log("picture isn't uploaded\n");
+      res.redirect('http://uwiproject.herokuapp.com/#/page1/page2');
+    }
+  }); 
 
 });
 
