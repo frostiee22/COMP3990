@@ -1,32 +1,32 @@
 angular.module('app.services', [])
 
-    .factory('getData', function ($http) {
+    .factory('getData', function($http) {
         return {
-            update: function () {
+            update: function() {
 
             }
         }
     })
 
-    .service('BlankService', [function () {
+    .service('BlankService', [function() {
 
     }])
 
-    .factory('Items', function ($http, $q) {
+    .factory('Players', function($http, $q) {
         var results = {};
 
         function _all() {
             var d = $q.defer();
-           
+
             // getting data from the items table
             $http
                 .get("http://uwiproject.herokuapp.com/api/stats/players")
-                .success(function (response) {
+                .success(function(response) {
                     //caching data
                     Save(response, "items");
                     d.resolve(response);
                 })
-                .error(function (data) {
+                .error(function(data) {
                     alert("Unable to fetch item data");
                     console.log("Unable to fetch item data");
                 });
@@ -36,18 +36,18 @@ angular.module('app.services', [])
         return results;
     })
 
-    .factory('ItemDetails', function ($http, $timeout, $q) {
+    .factory('ItemDetails', function($http, $timeout, $q) {
         var results = {};
         function _all() {
             var d = $q.defer();
             $http
                 .get("http://uwiproject.herokuapp.com/api/stats/player/" + item.Player_Forename + "/" + item.Player_Surname)
-                .success(function (response) {
+                .success(function(response) {
                     //caching data
                     Save(response, "player");
                     d.resolve(response);
                 })
-                .error(function (data) {
+                .error(function(data) {
                     alert("Unable to fetch item data");
                     console.log("Unable to fetch item data");
                 });
@@ -58,7 +58,7 @@ angular.module('app.services', [])
     })
 
 
-    .factory('TopGoals', function ($http, $timeout, $q) {
+    .factory('TopGoals', function($http, $timeout, $q) {
         var results = {};
 
         function _all() {
@@ -66,12 +66,34 @@ angular.module('app.services', [])
 
             $http
                 .get("http://uwiproject.herokuapp.com/api/stats/goals/5")
-                .success(function (response) {
+                .success(function(response) {
                     d.resolve(response);
                 })
-                .error(function (data) {
+                .error(function(data) {
                     alert("Unable to fetch most goals");
                     console.log("Unable to fetch most goals");
+                });
+            return d.promise;
+        }
+        results.all = _all;
+        return results;
+    })
+
+    .factory('SimpleData', function($http, $timeout, $q) {
+        var results = {};
+
+        function _all() {
+            var d = $q.defer();
+
+            $http
+                .get("http://uwiproject.herokuapp.com/api/simple")
+                .success(function(response) {
+                    Save(response, "SimpleData");
+                    d.resolve(response);
+                })
+                .error(function(data) {
+                    alert("Unable to fetch simple data");
+                    console.log("Unable to fetch simple data");
                 });
             return d.promise;
         }
@@ -118,7 +140,7 @@ function forEach(arr, operation) {
 function getItemStores(ItemID) {
     var StoresItems = Update("storeitem"),
         data = [];
-    forEach(StoresItems, function (storeitem) {
+    forEach(StoresItems, function(storeitem) {
         if (storeitem.itemid == ItemID) {
             var temp = {};
             temp = getStoreName(storeitem.storeid);
@@ -134,7 +156,7 @@ function getItemStores(ItemID) {
 function getStoreName(StoreID) {
     var stores = Update("stores"),
         temp = {};
-    forEach(stores, function (store) {
+    forEach(stores, function(store) {
         if (store.storeid == StoreID) {
             temp = store;
         }
@@ -147,7 +169,7 @@ function getStoreName(StoreID) {
 function getItemName(ItemId) {
     var items = Update("items"),
         temp = {};
-    forEach(items, function (item) {
+    forEach(items, function(item) {
         if (item.itemid = ItemId) {
             temp = item;
         }
@@ -159,7 +181,7 @@ function getItemName(ItemId) {
 function itemDetails(barcode) {
     var items = Update("items"),
         temp = {};
-    forEach(items, function (item) {
+    forEach(items, function(item) {
         if (item.barcode == barcode) {
             temp = item;
         }
@@ -168,3 +190,13 @@ function itemDetails(barcode) {
 }
 
 
+function SimplePlayerDetails(Player_ID) {
+    var SPD = Update("SimpleData"),
+        temp = {};
+    forEach(SPD, function(s){
+        if (s.Player_ID == Player_ID){
+            temp = s;
+        }
+    });
+    return temp;
+}

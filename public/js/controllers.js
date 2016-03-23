@@ -11,7 +11,7 @@ angular.module('app.controllers', [])
 
     .controller('enterCtrl', ['$scope', '$ionicSideMenuDelegate', function($scope, $ionicSideMenuDelegate) {
         console.log("enterCtrl launched");
-        
+
         $scope.toggleLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
         };
@@ -19,12 +19,22 @@ angular.module('app.controllers', [])
 
     }])
 
-    .controller('itemSearchCtrl', ['$scope', 'Items', function($scope, Items) {
+    .controller('itemSearchCtrl', ['$scope', 'Players','SimpleData', '$ionicPopover', function($scope, Players, SimpleData, $ionicPopover) {
         console.log("itemSearchCtrl");
         $scope.items = [{ name: 'loading...' }];
-        Items.all().then(
+        Players.all().then(
             function(res) {
                 $scope.items = res;
+            },
+            function(err) {
+                console.error(err);
+            }
+        );
+        
+        // getting simplify data of players
+        SimpleData.all().then(
+            function(res) {
+                $scope.SimpleData = res;
             },
             function(err) {
                 console.error(err);
@@ -38,10 +48,59 @@ angular.module('app.controllers', [])
                 item.Player_Forename = "[fname]";
             }
         }
+
+        /////////////////////////////////////////////////////
+        // POP OVER
+        console.log("hold :D");
+        // .fromTemplate() method
+        var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
+
+        $scope.popover = $ionicPopover.fromTemplate(template, {
+            scope: $scope
+        });
+
+        // .fromTemplateUrl() method
+        $ionicPopover.fromTemplateUrl('my-popover.html', {
+            scope: $scope
+        }).then(function(popover) {
+            $scope.popover = popover;
+        });
+
+
+        $scope.openPopover = function($event) {
+             item = this.item;
+             $scope.name = item;
+             var temp = SimplePlayerDetails(item.Player_ID);
+             console.log(temp);
+             $scope.SPD = temp;
+            $scope.popover.show($event);
+        };
+        $scope.closePopover = function() {
+            $scope.popover.hide();
+        };
+        //Cleanup the popover when we're done with it!
+        $scope.$on('$destroy', function() {
+            $scope.popover.remove();
+        });
+        // Execute action on hide popover
+        $scope.$on('popover.hidden', function() {
+            // Execute action
+        });
+        // Execute action on remove popover
+        $scope.$on('popover.removed', function() {
+            // Execute action
+        });
+        
+        ///////////////////////////////////////////////////////
+        
     }])
 
-    .controller('itemDetailsCtrl', ['$scope', 'ItemDetails', function($scope, ItemDetails) {
+    .controller('itemDetailsCtrl', ['$scope', 'ItemDetails', '$ionicSideMenuDelegate', function($scope, ItemDetails, $ionicSideMenuDelegate) {
         console.log("itemDetailsCtrl");
+
+        $scope.toggleLeft = function() {
+            $ionicSideMenuDelegate.toggleLeft();
+        };
 
         $scope.stores = [{ name: 'Loading..' }];
         ItemDetails.all().then(
@@ -72,10 +131,6 @@ angular.module('app.controllers', [])
                 console.error(err);
             }
         );
-
-
-
-
     }])
 
 

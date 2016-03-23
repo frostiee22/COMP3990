@@ -26,8 +26,19 @@
             </ion-side-menu-content>
 
             <!-- Right menu -->
-            <!--<ion-side-menu side="right">
-            </ion-side-menu>-->
+            <ion-side-menu side="right">
+                <ion-header-bar class="bar bar-header bar-assertive">
+                    <h1 class="title">UPDATE</h1>
+                </ion-header-bar>
+                <ion-content has-header="true">
+                    <ul class="list">
+                        <a ui-sref="tabsController.coach" nav-clear class="item" ng-click="toggleLeft()">Coach</a>
+                        <a ui-sref="tabsController.player" nav-clear class="item" ng-click="toggleLeft()">Player</a>
+                        <a ui-sref="tabsController.match" nav-clear class="item" ng-click="toggleLeft()">Player Match Stats</a>
+                        <a ui-sref="tabsController.team" nav-clear class="item" ng-click="toggleLeft()">Team</a>
+                    </ul>
+                </ion-content>
+            </ion-side-menu>
 
         </ion-side-menus>
     </ion-content>

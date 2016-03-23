@@ -1,5 +1,22 @@
 <ion-view title="Player Search">
     <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="itemSearchCtrl as item">
+
+        <script id="my-popover.html" type="text/ng-template">
+            <ion-popover-view>
+                <ion-header-bar>
+                    <h1 class="title">{{name.Player_Forename}} {{name.Player_Surname}} Stats</h1>
+                </ion-header-bar>
+                <ion-content>
+                    <div class="card">
+                        <div class="item item-body">Experience: <progress max="1" value="50"></div>
+                        <div class="item item-body">Attack    : <progress max="1" value="{{(SPD.sum_duels_won) / (SPD.sum_duels_won + SPD.sum_duels_lost)}}"></progress></div>
+                        <div class="item item-body">Defence   : <progress max="100" value="79"></div>
+                        <div class="item item-body">Endurance : <progress max="100" value="65"></div>
+                    </div>
+                </ion-content>
+            </ion-popover-view>
+        </script>
+
         <div ng-init="items">
         </div>
 
@@ -13,11 +30,12 @@
 
 
         <div class="list card" collection-repeat="item in items | filter:searchText" ng-model="item.name" ui-sref="tabsController.details"
-        ng-click="details()">
+        ng-click="details()" on-hold="openPopover($event)">
             <div class="item item-divider">{{item.Player_Forename}} {{item.Player_Surname}}</div>
             <div class="item item-body"></div>
         </div>
-        
+
+
 
         <!--<ion-infinite-scroll ng-if="!noMoreItemsAvailable" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>-->
 
