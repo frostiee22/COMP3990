@@ -33,7 +33,7 @@ app.get ('/api/stats/all',function(req,res){
 });
 
 app.get ('/api/stats/players',function(req,res){
-	connection.query("SELECT DISTINCT Player_Forename , Player_Surname from stats ORDER BY `stats`.`Player_Surname` ASC", function(err, rows){
+	connection.query("SELECT DISTINCT Player_ID, Player_Forename , Player_Surname from stats ORDER BY `stats`.`Player_Surname` ASC", function(err, rows){
     		if (err)
                   throw err;
                 res.json(rows);
