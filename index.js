@@ -117,8 +117,8 @@ app.get('/api/:table', function(req, res) {
 app.post('/Coach', function(req, res) {
 
     var sql, data = {};
-    data.lname = req.body.lname;
-    data.fname = req.body.fname;
+    data.lname = req.lname;
+    data.fname = req.fname;
 
     sql = "INSERT INTO `coach` (`Coach_Forename`,`Coach_Surname`) VALUES ('" + data.fname + "','" + data.lname + "');";
 
@@ -126,7 +126,7 @@ app.post('/Coach', function(req, res) {
         if (err) {
             return err;
         } else {
-            res.redirect('/#/page1/coach');
+            res.json({data : "work"});
         }
     });
 });
