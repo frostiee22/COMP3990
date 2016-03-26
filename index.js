@@ -124,9 +124,9 @@ app.get('/Coach/:fname/:lname', function(req, res) {
 
     connection.query(sql, function(err, rows) {
         if (err) {
-            return err;
+            res.json({data: "err"});
         } else {
-            res.json({data : "work"});
+            res.json({data : "suc"});
         }
     });
 });
@@ -154,9 +154,9 @@ app.get('/Player/:fname/:lname/:position/:teamid', function(req, res) {
 
     connection.query(sql, function(err, rows) {
         if (err) {
-            return err;
+            res.json({data: "err"});
         } else {
-            res.json({data : "work"});
+            res.json({data : "suc"});
         }
     });
 
@@ -175,9 +175,9 @@ app.get('/Team/:coachid/:tname', function(req, res) {
 
     connection.query(sql, function(err, rows) {
         if (err) {
-            return err;
+            res.json({data: "err"});
         } else {
-            res.json({data : "work"});
+            res.json({data : "suc"});
         }
     });
 
