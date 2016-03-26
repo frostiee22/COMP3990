@@ -114,11 +114,11 @@ app.get('/api/:table', function(req, res) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // getting data from forms
 
-app.post('/Coach', function(req, res) {
+app.get('/Coach/:fname/:lname', function(req, res) {
 
     var sql, data = {};
-    data.lname = req.lname;
-    data.fname = req.fname;
+    data.lname = req.param("lname");
+    data.fname = req.param("fname");
 
     sql = "INSERT INTO `coach` (`Coach_Forename`,`Coach_Surname`) VALUES ('" + data.fname + "','" + data.lname + "');";
 
@@ -133,7 +133,7 @@ app.post('/Coach', function(req, res) {
 
 
 
-app.post('/Match', function(req, res) {
+app.get('/Match', function(req, res) {
 
     var data = {};
     data.playerid = req.body.playerid;
@@ -142,21 +142,44 @@ app.post('/Match', function(req, res) {
 
 });
 
-app.post('/Player', function(req, res) {
+app.get('/Player/:fname/:lname/:position/:teamid', function(req, res) {
 
-    var data = {};
-    data.lname = req.body.lname;
-    data.fname = req.body.fname;
-    data.position = req.body.position;
-    data.teamid = req.body.teamid;
+    var data = {}, sql;
+    data.lname = req.param("lname");
+    data.fname = req.param("fname");
+    data.position = req.param("position");
+    data.teamid = req.param("teamid");
+
+    sql = "INSERT INTO `player` (`Player_Forename`,`Player_Surname`, `Position_ID`, `Team_ID`) VALUES ('" + data.fname + "','" + data.lname + "',"+ data.position+"," +data.teamid+");";
+
+    connection.query(sql, function(err, rows) {
+        if (err) {
+            return err;
+        } else {
+            res.json({data : "work"});
+        }
+    });
+
+
 
 });
 
-app.post('/Team', function(req, res) {
+app.get('/Team/:coachid/:tname', function(req, res) {
 
     var data = {};
-    data.coachid = req.body.coachid;
-    data.tname = req.body.tname;
+    data.coachid = req.param("coachid");
+    data.tname = req.param("tname");
+
+
+    sql = "INSERT INTO `team` (`Coach_Forename`,`Coach_Surname`) VALUES (" + data.coachid + ",'" + data.tname + "');";
+
+    connection.query(sql, function(err, rows) {
+        if (err) {
+            return err;
+        } else {
+            res.json({data : "work"});
+        }
+    });
 
 });
 
