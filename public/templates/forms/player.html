@@ -1,26 +1,26 @@
 <ion-view title="Player Form">
     <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="enterCtrl">
 
-        <form name="form" method="POST" action="http://uwiproject.herokuapp.com/Player" enctype="multipart/form-data" class="css-form" novalidate>
+        <form ng-submit="submitPlayer()">
             <div class="list">
                 <label class="item item-input item-floating-label">
                     <span class="input-label" t>First Name</span>
-                    <input type="text" name="fname" placeholder="First Name">
+                    <input type="text" name="fname" placeholder="First Name" ng-model="player.fname">
                 </label>
 
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Last Name</span>
-                    <input type="text" name="lname" placeholder="Last Name">
+                    <input type="text" name="lname" placeholder="Last Name" ng-model="player.lname">
                 </label>
 
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Position Id</span>
-                    <input type="text" name="position" placeholder="Position Id">
+                    <input type="text" name="position" placeholder="Position Id" ng-model="player.position">
                 </label>
 
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Team Id</span>
-                    <input type="text" name="teamid" placeholder="Team Id">
+                    <input type="text" name="teamid" placeholder="Team Id" ng-model="player.teamid">
                 </label>
 
                 <button class="button button-block button-positive">
@@ -28,6 +28,12 @@
                 </button>
             </div>
         </form>
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                Response: <b ng-bind="response"></b>
+            </div>
+        </div>
 
     </ion-content>
 </ion-view>
