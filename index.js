@@ -126,7 +126,7 @@ app.post('/Coach', function(req, res) {
         if (err) {
             return err;
         } else {
-            res.redirect('#/page1/coach');
+            res.redirect('/#/page1/coach');
         }
     });
 });
