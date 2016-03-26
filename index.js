@@ -171,7 +171,7 @@ app.get('/Team/:coachid/:tname', function(req, res) {
     data.tname = req.param("tname");
 
 
-    sql = "INSERT INTO `team` (`Coach_Forename`,`Coach_Surname`) VALUES (" + data.coachid + ",'" + data.tname + "');";
+    sql = "INSERT INTO `team` (`Coach_ID`,`Team`) VALUES (" + data.coachid + ",'" + data.tname + "');";
 
     connection.query(sql, function(err, rows) {
         if (err) {
