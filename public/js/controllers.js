@@ -7,9 +7,19 @@ angular.module('app.controllers', [])
         Save({}, "stores");
         Save({}, "storeitem");
         getData.update();
+
+        $http
+            .get('http://uwiproject.herokuapp.com/api/team')
+            .success(function(response) {
+                Save(response, "teams");
+            })
+            .error(function(data) {
+                $scope.response = "error uploading!";
+            });
+
     }])
 
-    .controller('enterCtrl', ['$scope', '$ionicSideMenuDelegate', function($scope, $ionicSideMenuDelegate) {
+    .controller('enterCtrl', ['$scope', '$http', '$ionicSideMenuDelegate', '$ionicActionSheet', '$timeout', function($scope, $http, $ionicSideMenuDelegate, $ionicActionSheet, $timeout) {
         console.log("enterCtrl launched");
 
         $scope.toggleLeft = function() {
@@ -17,9 +27,162 @@ angular.module('app.controllers', [])
         };
 
 
+        // COACH FORM
+        $scope.submitCoach = function() {
+            var link = "http://uwiproject.herokuapp.com/Coach/" + $scope.coach.fname + "/" + $scope.coach.lname;
+            console.log(link);
+            $http
+                .get(link)
+                .success(function(response) {
+                    if (response.data == 'suc') {
+                        $scope.response = "successful";
+                        $scope.coach = {};
+                    }
+                    else {
+                        $scope.response = "error uploading!";
+                    }
+                })
+                .error(function(data) {
+                    console.log("Unable to fetch item data");
+                    $scope.response = "error uploading!";
+                });
+        };
+
+
+        // MATCH FORM
+        $scope.submitMatch = function() {
+            var m = $scope.match;
+            var link = "http://uwiproject.herokuapp.com/Match/" + m.playerid + "/" + m.gameid;
+            $http
+                .get(link)
+                .success(function(response) {
+                    if (response.data == 'suc') {
+                        $scope.response = "successful";
+                        $scope.match = {};
+                    }
+                    else {
+                        $scope.response = "error uploading!";
+                    }
+                })
+                .error(function(data) {
+                    $scope.response = "error uploading!";
+                });
+        };
+
+        //PLAYER FORM
+
+
+
+
+        console.log(Update("teams"));
+        $scope.teams = Update("teams");
+        
+        $scope.submitPlayer = function() {
+            var p = $scope.player;
+            var link = "http://uwiproject.herokuapp.com/Player/" + p.fname + "/" + p.lname + "/" + p.position + "/" + p.team.Team_ID.Team_ID;
+            console.log(link);
+            $http
+                .get(link)
+                .success(function(response) {
+                    if (response.data == 'suc') {
+                        $scope.response = "successful";
+                        $scope.player = {};
+                    }
+                    else {
+                        $scope.response = "error uploading!";
+                    }
+                })
+                .error(function(data) {
+                    $scope.response = "error uploading!";
+                });
+        };
+
+
+        $scope.showSheet = function() {
+            // Show the action sheet
+            if ($scope.player == null) {
+                $scope.player = {};
+            }
+
+            var PlayerPosition;
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    { text: 'Attacker' },
+                    { text: 'Defender' },
+                    { text: 'Mid Fielder' },
+                    { text: 'Goalkeeper' }
+                ],
+                destructiveText: 'Delete',
+                titleText: 'Select Your Position',
+                cancelText: 'Cancel',
+                cancel: function() {
+                    // add cancel code..
+                },
+                buttonClicked: function(index) {
+                    if (index == 0) PlayerPosition = 6;
+                    else if (index == 1) PlayerPosition = 2;
+                    else if (index == 2) PlayerPosition = 4;
+                    else if (index == 3) PlayerPosition = 1;
+                    else {
+                        PlayerPosition = 0;
+                    }
+                    var pos = $scope.player.position = PlayerPosition;
+
+                    if (pos == 1 || pos == 2 || pos == 4 || pos == 6) {
+                        $timeout(function() {
+                            hideSheet();
+                        }, 150);
+                    }
+
+                    return PlayerPosition;
+                }
+            });
+
+            // For example's sake, hide the sheet after two seconds
+            // $timeout(function() {
+            //     hideSheet();
+            // }, 3000);
+
+        };
+
+
+        //TEAM FORM
+        
+        function updateTeams() {
+            $http
+                .get('http://uwiproject.herokuapp.com/api/team')
+                .success(function(response) {
+                    Save(response, "teams");
+                })
+                .error(function(data) {
+                    $scope.response = "error uploading!";
+                });
+        }
+        
+        $scope.submitTeam = function() {
+            var t = $scope.team;
+            var link = "http://uwiproject.herokuapp.com/Team/" + t.coachid + "/" + t.tname;
+            $http
+                .get(link)
+                .success(function(response) {
+                    if (response.data == 'suc') {
+                        $scope.response = "successful";
+                        $scope.team = {};
+                        updateTeams();
+                    }
+                    else {
+                        $scope.response = "error uploading!";
+                    }
+                })
+                .error(function(data) {
+                    $scope.response = "error uploading!";
+                });
+        };
+
+
     }])
 
-    .controller('itemSearchCtrl', ['$scope', 'Players','SimpleData', '$ionicPopover', function($scope, Players, SimpleData, $ionicPopover) {
+    .controller('itemSearchCtrl', ['$scope', 'Players', 'SimpleData', '$ionicPopover', function($scope, Players, SimpleData, $ionicPopover) {
         console.log("itemSearchCtrl");
         $scope.items = [{ name: 'loading...' }];
         Players.all().then(
@@ -30,7 +193,7 @@ angular.module('app.controllers', [])
                 console.error(err);
             }
         );
-        
+
         // getting simplify data of players
         SimpleData.all().then(
             function(res) {
@@ -68,11 +231,11 @@ angular.module('app.controllers', [])
 
 
         $scope.openPopover = function($event) {
-             item = this.item;
-             $scope.name = item;
-             var temp = SimplePlayerDetails(item.Player_ID);
-             console.log(temp);
-             $scope.SPD = temp;
+            item = this.item;
+            $scope.name = item;
+            var temp = SimplePlayerDetails(item.Player_ID);
+            console.log(temp);
+            $scope.SPD = temp;
             $scope.popover.show($event);
         };
         $scope.closePopover = function() {
@@ -90,9 +253,9 @@ angular.module('app.controllers', [])
         $scope.$on('popover.removed', function() {
             // Execute action
         });
-        
+
         ///////////////////////////////////////////////////////
-        
+
     }])
 
     .controller('itemDetailsCtrl', ['$scope', 'ItemDetails', '$ionicSideMenuDelegate', function($scope, ItemDetails, $ionicSideMenuDelegate) {

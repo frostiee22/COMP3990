@@ -15,12 +15,14 @@
 
                 <label class="item item-input item-floating-label">
                     <span class="input-label">Position Id</span>
-                    <input type="text" name="position" placeholder="Position Id" ng-model="player.position">
+                    <input type="text" name="position" placeholder="Position Id" ng-model="player.position" ng-click="showSheet()">
                 </label>
 
                 <label class="item item-input item-floating-label">
-                    <span class="input-label">Team Id</span>
-                    <input type="text" name="teamid" placeholder="Team Id" ng-model="player.teamid">
+                    <!--<span class="input-label">Team Id</span>-->
+                    <select ng-options="team as team.Team for team in teams track by team.Team_ID" ng-model="player.team.Team_ID"></select>
+                   
+                    <!--<input type="text" name="teamid" placeholder="Team Id" ng-model="player.teamid">-->
                 </label>
 
                 <button class="button button-block button-positive">
