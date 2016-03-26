@@ -116,15 +116,17 @@ app.get('/api/:table', function(req, res) {
 
 app.post('/Coach', function(req, res) {
 
-    var data = {};
+    var sql, data = {};
     data.lname = req.body.lname;
     data.fname = req.body.fname;
-    
-    connection.query("INSERT INTO `coach` (`Coach_Forename`, `Coach_Surname`) VALUES ('"+ data.fname +"','"+data.lname+"')", function(err, rows) {
+
+    sql = "INSERT INTO `coach` (`Coach_Forename`,`Coach_Surname`) VALUES ('" + data.fname + "','" + data.lname + "');";
+
+    connection.query(sql, function(err, rows) {
         if (err) {
             return err;
         } else {
-            
+
         }
     });
 });
