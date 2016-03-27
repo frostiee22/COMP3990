@@ -173,7 +173,7 @@ app.get('/Player/:fname/:lname/:position/:teamid', function(req, res) {
 
 });
 
-app.get ('Game/:date/:venue/:team1/:team2',function(req, res){
+app.get ('/Game/:date/:venue/:team1/:team2',function(req, res){
 	var game = {};
 	game.date = req.param("date");
 	game.venue = req.param("venue");
