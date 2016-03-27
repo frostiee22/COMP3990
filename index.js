@@ -127,7 +127,7 @@ app.get('/Coach/:fname/:lname', function(req, res) {
             res.json({data: "err"});
         } else {
 
-        	sql = "SELECT * FROM `coach` WHERE `Coach_Surname` LIKE '"+kdata.lname+"' AND `Coach_Forename` LIKE '"+data.fname+"'";
+        	sql = "SELECT * FROM `coach` WHERE `Coach_Surname` LIKE '"+data.lname+"' AND `Coach_Forename` LIKE '"+data.fname+"'";
 		    connection.query(sql, function(err, rows) {
 		        if (err) {
 		            res.json({data: "err",coachid: "err"});
