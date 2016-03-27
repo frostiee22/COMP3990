@@ -127,17 +127,14 @@ app.get('/Coach/:fname/:lname', function(req, res) {
             res.json({data: "err"});
         } else {
 
-        	sql = "SELECT Coach_ID FROM coach WHERE `Coach_Forename` = " + data.fname +" and `Coach_Surname` = " + data.lname;
+        	sql = "SELECT * FROM `coach` WHERE `Coach_Forename` = " + data.fname +" and `Coach_Surname` = " + data.lname;
 		    connection.query(sql, function(err, rows) {
 		        if (err) {
 		            res.json({data: "err",coachid: "err"});
 		        } else {
-		        	
-		            res.json({data : "suc",coachid: rows.Coach_ID});
+		            res.json({data : "suc",coachid: rows[0].Coach_ID});
 		        }
 		    });
-
-            //res.json({data : "suc"});
         }
     });
 });
