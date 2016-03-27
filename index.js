@@ -131,16 +131,25 @@ app.get('/Coach/:fname/:lname', function(req, res) {
     });
 });
 
-
-
-app.get('/Match', function(req, res) {
+app.get('/Team/:coachid/:tname', function(req, res) {
 
     var data = {};
-    data.playerid = req.body.playerid;
-    data.gameid = req.body.gameid;
+    data.coachid = req.param("coachid");
+    data.tname = req.param("tname");
 
+
+    sql = "INSERT INTO `team` (`Coach_ID`,`Team`) VALUES (" + data.coachid + ",'" + data.tname + "');";
+
+    connection.query(sql, function(err, rows) {
+        if (err) {
+            res.json({data: "err"});
+        } else {
+            res.json({data : "suc"});
+        }
+    });
 
 });
+
 
 app.get('/Player/:fname/:lname/:position/:teamid', function(req, res) {
 
@@ -164,14 +173,15 @@ app.get('/Player/:fname/:lname/:position/:teamid', function(req, res) {
 
 });
 
-app.get('/Team/:coachid/:tname', function(req, res) {
+app.get ('Game/:date/:venue/:team1/:team2',function(req, res){
+	var game = {};
+	game.date = req.param("date");
+	game.venue = req.param("venue");
+	game.team1 = req.param("team1");
+	game.team2 = req.param("team2");
 
-    var data = {};
-    data.coachid = req.param("coachid");
-    data.tname = req.param("tname");
 
-
-    sql = "INSERT INTO `team` (`Coach_ID`,`Team`) VALUES (" + data.coachid + ",'" + data.tname + "');";
+	sql = "INSERT INTO `game` (`Date`,`Venue`, `Team1_ID`, `Team2_ID`) VALUES ('" + game.date + "','" + game.venue + "',"+ game.team1+"," + game.team2 +");";
 
     connection.query(sql, function(err, rows) {
         if (err) {
@@ -182,6 +192,44 @@ app.get('/Team/:coachid/:tname', function(req, res) {
     });
 
 });
+
+
+
+app.get('/Match/:playerid/:gameid/:goals/:succesfulpasses/:unsuccesfulpasses/:touches/:duelswon/:duelslost/:handballsconceded/:penaltiesconceded/:yellowcard/:redcard' function(req, res) {
+
+    var data = {};
+    data.playerid = req.param("playerid");
+    data.gameid = req.param("gameid");
+    data.goals = req.param("goals");
+    data.succesfulpasses = req.param("succesfulpasses");
+    data.unsuccesfulpasses = req.param("unsuccesfulpasses");
+    data.touches = req.param("touches");
+    data.duelswon = req.param("duelswon");
+    data.duelslost = req.param("duelslost");
+    data.handballsconceded = req.param("handballsconceded");
+    data.penaltiesconceded = req.param("penaltiesconceded");
+    data.yellowcard = req.param("yellowcard");
+    data.redcard = req.param("redcard");
+
+
+    sql = "INSERT INTO `player_game` (`Player_ID`, `Game_ID`, `Goals`, `Passes_Succesful`, `Passed_Unsuccessful`, `Touches`, `Duels_Won`, `Duels_Lost`, `Handballs_Conceded`, `Penalties_Conceded`, `Yellow_Cards`, `Red_Cards`) VALUES " + 
+    "(" +data.playerid+","+data.gameid+", "+data.goals+", "+data.succesfulpasses+", "+data.unsuccesfulpasses+", "+data.touches+", "+data.duelswon+", "+data.duelslost+", "+handballsconceded+", "+penaltiesconceded+", "+yellowcard+", "+redcard+")";
+
+    connection.query(sql, function(err, rows) {
+        if (err) {
+            res.json({data: "err"});
+        } else {
+            res.json({data : "suc"});
+        }
+    });
+
+
+
+});
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
