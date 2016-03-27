@@ -132,7 +132,7 @@ app.get('/Coach/:fname/:lname', function(req, res) {
 		        if (err) {
 		            res.json({data: "err",coachid: "err"});
 		        } else {
-		            res.json({data : "suc",coachid: rows[0].Coach_ID});
+		            res.json({data : "suc",coachid: rows});
 		        }
 		    });
         }
