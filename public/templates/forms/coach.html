@@ -14,7 +14,7 @@
                     <input type="text" name="lname" placeholder="Last Name" ng-model="coach.lname">
                 </label>
 
-<!--onclick="submit(); setTimeout(function(){reset()},5000); return false;"-->
+                <!--onclick="submit(); setTimeout(function(){reset()},5000); return false;"-->
 
                 <button class="button button-block button-positive" type="submit">
                     Submit
@@ -25,9 +25,16 @@
 
         <div class="card">
             <div class="item item-text-wrap">
+                Coach ID: <b ng-bind="coachID"></b>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="item item-text-wrap">
                 Response: <b ng-bind="response"></b>
             </div>
         </div>
+
 
 
     </ion-content>

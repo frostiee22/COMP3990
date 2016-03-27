@@ -29,10 +29,14 @@ angular.module('app.controllers', [])
                 .get(link)
                 .success(function(response) {
                     if (response.data == 'suc') {
+                        console.log(response);
                         $scope.response = "successful";
+                        console.log(response.coachid[0].Coach_ID);
+                        $scope.coachID = response.coachid[0].Coach_ID;
                         $scope.coach = {};
                     }
                     else {
+                        console.log(response);
                         $scope.response = "error uploading!";
                     }
                 })
