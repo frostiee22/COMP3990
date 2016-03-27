@@ -165,6 +165,16 @@ angular.module('app.controllers', [])
                         if (response.data == 'suc') {
                             $scope.response = "successful";
                             $scope.match = {};
+                            (function() {
+                            $http
+                                .get('http://uwiproject.herokuapp.com/api/simplegame')
+                                .success(function(response) {
+                                    Save(response, "newplayers");
+                                })
+                                .error(function(data) {
+                                    $scope.response = "error uploading!";
+                                });
+                        })();
                         }
                         else {
                             $scope.response = "error uploading!";
@@ -201,15 +211,9 @@ angular.module('app.controllers', [])
                     $scope.response = "error uploading!";
                 });
         };
-
-
-
-
-
-
-
-
     }])
+// End enterCtrl
+
 
     .controller('itemSearchCtrl', ['$scope', 'Players', 'SimpleData', '$ionicPopover', function($scope, Players, SimpleData, $ionicPopover) {
         console.log("itemSearchCtrl");

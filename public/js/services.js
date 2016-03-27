@@ -3,32 +3,39 @@ angular.module('app.services', [])
     .factory('getData', function($http) {
         return {
             update: function() {
-                $http
-                    .get('http://uwiproject.herokuapp.com/api/team')
-                    .success(function(response) {
-                        Save(response, "teams");
-                    })
-                    .error(function(data) {
-                        $scope.response = "error uploading!";
-                    });
 
-                $http
-                    .get('http://uwiproject.herokuapp.com/api/simplegame')
-                    .success(function(response) {
-                        Save(response, "newgames");
-                    })
-                    .error(function(data) {
-                        $scope.response = "error uploading!";
-                    });
+                setTimeout(function() {
+                    $http
+                        .get('http://uwiproject.herokuapp.com/api/team')
+                        .success(function(response) {
+                            Save(response, "teams");
+                        })
+                        .error(function(data) {
+                            $scope.response = "error uploading!";
+                        });
+                }, 200);
 
-                $http
-                    .get('http://uwiproject.herokuapp.com/api/simpleplayer')
-                    .success(function(response) {
-                        Save(response, "newplayers");
-                    })
-                    .error(function(data) {
-                        $scope.response = "error uploading!";
-                    });
+                setTimeout(function() {
+                    $http
+                        .get('http://uwiproject.herokuapp.com/api/simplegame')
+                        .success(function(response) {
+                            Save(response, "newgames");
+                        })
+                        .error(function(data) {
+                            $scope.response = "error uploading!";
+                        });
+                }, 400);
+
+                setTimeout(function() {
+                    $http
+                        .get('http://uwiproject.herokuapp.com/api/simpleplayer')
+                        .success(function(response) {
+                            Save(response, "newplayers");
+                        })
+                        .error(function(data) {
+                            $scope.response = "error uploading!";
+                        });
+                }, 600);
             }
         }
     })
