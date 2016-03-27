@@ -195,7 +195,7 @@ app.get ('/Game/:date/:venue/:team1/:team2',function(req, res){
 
 
 
-app.get('/Match/:playerid/:gameid/:goals/:succesfulpasses/:unsuccesfulpasses/:touches/:duelswon/:duelslost/:handballsconceded/:penaltiesconceded/:yellowcard/:redcard' function(req, res) {
+app.get('/Match/:playerid/:gameid/:goals/:succesfulpasses/:unsuccesfulpasses/:touches/:duelswon/:duelslost/:handballsconceded/:penaltiesconceded/:yellowcard/:redcard', function(req, res) {
 
     var data = {};
     data.playerid = req.param("playerid");
@@ -213,7 +213,7 @@ app.get('/Match/:playerid/:gameid/:goals/:succesfulpasses/:unsuccesfulpasses/:to
 
 
     sql = "INSERT INTO `player_game` (`Player_ID`, `Game_ID`, `Goals`, `Passes_Succesful`, `Passed_Unsuccessful`, `Touches`, `Duels_Won`, `Duels_Lost`, `Handballs_Conceded`, `Penalties_Conceded`, `Yellow_Cards`, `Red_Cards`) VALUES " + 
-    "(" +data.playerid+","+data.gameid+", "+data.goals+", "+data.succesfulpasses+", "+data.unsuccesfulpasses+", "+data.touches+", "+data.duelswon+", "+data.duelslost+", "+handballsconceded+", "+penaltiesconceded+", "+yellowcard+", "+redcard+")";
+    "(" +data.playerid+","+data.gameid+", "+data.goals+", "+data.succesfulpasses+", "+data.unsuccesfulpasses+", "+data.touches+", "+data.duelswon+", "+data.duelslost+", "+handballsconceded+","+penaltiesconceded+", "+yellowcard+", "+redcard+")";
 
     connection.query(sql, function(err, rows) {
         if (err) {
@@ -222,9 +222,6 @@ app.get('/Match/:playerid/:gameid/:goals/:succesfulpasses/:unsuccesfulpasses/:to
             res.json({data : "suc"});
         }
     });
-
-
-
 });
 
 
