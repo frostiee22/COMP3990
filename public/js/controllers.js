@@ -164,7 +164,7 @@ angular.module('app.controllers', [])
                     .success(function(response) {
                         if (response.data == 'suc') {
                             $scope.response = "successful";
-                            $scope.match = {};
+                            $scope.game = {};
                             (function() {
                             $http
                                 .get('http://uwiproject.herokuapp.com/api/simplegame')
