@@ -156,7 +156,7 @@ angular.module('app.controllers', [])
             var g = $scope.game;
             var link = "http://uwiproject.herokuapp.com/Game/" + g.date + "/" + g.venue + "/" + g.team1.Team_ID.Team_ID + "/" + g.team2.Team_ID.Team_ID;
             console.log(link);
-            if (g.team1.Team_ID.Team_ID == g.team1.Team_ID.Team_ID) {
+            if (g.team1.Team_ID.Team_ID == g.team2.Team_ID.Team_ID) {
                 $scope.response = "Teams selected are the same!";
             } else {
                 $http
