@@ -169,7 +169,7 @@ angular.module('app.controllers', [])
                             $http
                                 .get('http://uwiproject.herokuapp.com/api/simplegame')
                                 .success(function(response) {
-                                    Save(response, "newplayers");
+                                    Save(response, "newgames");
                                 })
                                 .error(function(data) {
                                     $scope.response = "error uploading!";
