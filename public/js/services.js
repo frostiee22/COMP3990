@@ -3,7 +3,32 @@ angular.module('app.services', [])
     .factory('getData', function($http) {
         return {
             update: function() {
+                $http
+                    .get('http://uwiproject.herokuapp.com/api/team')
+                    .success(function(response) {
+                        Save(response, "teams");
+                    })
+                    .error(function(data) {
+                        $scope.response = "error uploading!";
+                    });
 
+                $http
+                    .get('http://uwiproject.herokuapp.com/api/simplegame')
+                    .success(function(response) {
+                        Save(response, "newgames");
+                    })
+                    .error(function(data) {
+                        $scope.response = "error uploading!";
+                    });
+
+                $http
+                    .get('http://uwiproject.herokuapp.com/api/simpleplayer')
+                    .success(function(response) {
+                        Save(response, "newplayers");
+                    })
+                    .error(function(data) {
+                        $scope.response = "error uploading!";
+                    });
             }
         }
     })
@@ -193,8 +218,8 @@ function itemDetails(barcode) {
 function SimplePlayerDetails(Player_ID) {
     var SPD = Update("SimpleData"),
         temp = {};
-    forEach(SPD, function(s){
-        if (s.Player_ID == Player_ID){
+    forEach(SPD, function(s) {
+        if (s.Player_ID == Player_ID) {
             temp = s;
         }
     });

@@ -64,6 +64,15 @@ angular.module('app.routes', [])
                     }
                 }
             })
+            
+            .state('tabsController.game', {
+                url: '/game',
+                views: {
+                    'tab1': {
+                        templateUrl: 'templates/forms/game.html'
+                    }
+                }
+            })
 
 
             .state('tabsController.itemSearch', {

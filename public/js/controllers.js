@@ -7,16 +7,6 @@ angular.module('app.controllers', [])
         Save({}, "stores");
         Save({}, "storeitem");
         getData.update();
-
-        $http
-            .get('http://uwiproject.herokuapp.com/api/team')
-            .success(function(response) {
-                Save(response, "teams");
-            })
-            .error(function(data) {
-                $scope.response = "error uploading!";
-            });
-
     }])
 
     .controller('enterCtrl', ['$scope', '$http', '$ionicSideMenuDelegate', '$ionicActionSheet', '$timeout', function($scope, $http, $ionicSideMenuDelegate, $ionicActionSheet, $timeout) {
@@ -25,6 +15,10 @@ angular.module('app.controllers', [])
         $scope.toggleLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
         };
+
+        $scope.newplayers = Update("newplayers");
+        $scope.newgames = Update("newgames");
+        $scope.teams = Update("teams");
 
 
         // COACH FORM
@@ -49,16 +43,26 @@ angular.module('app.controllers', [])
         };
 
 
-        // MATCH FORM
-        $scope.submitMatch = function() {
-            var m = $scope.match;
-            var link = "http://uwiproject.herokuapp.com/Match/" + m.playerid + "/" + m.gameid;
+        //TEAM FORM
+        $scope.submitTeam = function() {
+            var t = $scope.team;
+            var link = "http://uwiproject.herokuapp.com/Team/" + t.coachid + "/" + t.tname;
             $http
                 .get(link)
                 .success(function(response) {
                     if (response.data == 'suc') {
                         $scope.response = "successful";
-                        $scope.match = {};
+                        $scope.team = {};
+                        (function() {
+                            $http
+                                .get('http://uwiproject.herokuapp.com/api/team')
+                                .success(function(response) {
+                                    Save(response, "teams");
+                                })
+                                .error(function(data) {
+                                    $scope.response = "error uploading!";
+                                });
+                        })();
                     }
                     else {
                         $scope.response = "error uploading!";
@@ -69,14 +73,8 @@ angular.module('app.controllers', [])
                 });
         };
 
+
         //PLAYER FORM
-
-
-
-
-        console.log(Update("teams"));
-        $scope.teams = Update("teams");
-        
         $scope.submitPlayer = function() {
             var p = $scope.player;
             var link = "http://uwiproject.herokuapp.com/Player/" + p.fname + "/" + p.lname + "/" + p.position + "/" + p.team.Team_ID.Team_ID;
@@ -87,6 +85,16 @@ angular.module('app.controllers', [])
                     if (response.data == 'suc') {
                         $scope.response = "successful";
                         $scope.player = {};
+                        (function() {
+                            $http
+                                .get('http://uwiproject.herokuapp.com/api/simpleplayer')
+                                .success(function(response) {
+                                    Save(response, "newplayers");
+                                })
+                                .error(function(data) {
+                                    $scope.response = "error uploading!";
+                                });
+                        })();
                     }
                     else {
                         $scope.response = "error uploading!";
@@ -137,38 +145,49 @@ angular.module('app.controllers', [])
                     return PlayerPosition;
                 }
             });
+        };
 
-            // For example's sake, hide the sheet after two seconds
-            // $timeout(function() {
-            //     hideSheet();
-            // }, 3000);
+        //GAME FORM
+        $scope.submitGame = function() {
+            var g = $scope.game;
+            var link = "http://uwiproject.herokuapp.com/Game/" + g.date + "/" + g.venue + "/" + g.team1.Team_ID.Team_ID + "/" + g.team2.Team_ID.Team_ID;
+            console.log(link);
+            if (g.team1.Team_ID.Team_ID == g.team1.Team_ID.Team_ID) {
+                $scope.response = "Teams selected are the same!";
+            } else {
+                $http
+                    .get(link)
+                    .success(function(response) {
+                        if (response.data == 'suc') {
+                            $scope.response = "successful";
+                            $scope.match = {};
+                        }
+                        else {
+                            $scope.response = "error uploading!";
+                        }
+                    })
+                    .error(function(data) {
+                        $scope.response = "error uploading!";
+                    });
+            }
 
         };
 
 
-        //TEAM FORM
-        
-        function updateTeams() {
-            $http
-                .get('http://uwiproject.herokuapp.com/api/team')
-                .success(function(response) {
-                    Save(response, "teams");
-                })
-                .error(function(data) {
-                    $scope.response = "error uploading!";
-                });
-        }
-        
-        $scope.submitTeam = function() {
-            var t = $scope.team;
-            var link = "http://uwiproject.herokuapp.com/Team/" + t.coachid + "/" + t.tname;
+
+        // MATCH FORM
+        $scope.submitMatch = function() {
+            var m = $scope.match;
+            var link = "http://uwiproject.herokuapp.com/Match/" + m.player.Player_ID.Player_ID + "/" + m.game.Game_ID.Game_ID + "/" + m.goals + "/" +
+                m.succesfulpasses + "/" + m.unsuccesfulpasses + "/" + m.touches + "/" + m.duelswon + "/" + m.duelslost + "/" +
+                m.handballsconceded + "/" + m.penaltiesconceded + "/" + m.yellowcard + "/" + m.redcard;
+            console.log(link);
             $http
                 .get(link)
                 .success(function(response) {
                     if (response.data == 'suc') {
                         $scope.response = "successful";
-                        $scope.team = {};
-                        updateTeams();
+                        $scope.match = {};
                     }
                     else {
                         $scope.response = "error uploading!";
@@ -178,6 +197,12 @@ angular.module('app.controllers', [])
                     $scope.response = "error uploading!";
                 });
         };
+
+
+
+
+
+
 
 
     }])
