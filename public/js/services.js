@@ -49,34 +49,22 @@ angular.module('app.services', [])
 
         function _all() {
             var d = $q.defer();
-
-            // getting data from the items table
-            $http
-                .get("http://uwiproject.herokuapp.com/api/stats/players")
-                .success(function(response) {
-                    //caching data
-                    Save(response, "items");
-                    d.resolve(response);
-                })
-                .error(function(data) {
-                    alert("Unable to fetch item data");
-                    console.log("Unable to fetch item data");
-                });
+            d.resolve(Update("newplayers"));
             return d.promise;
         }
         results.all = _all;
         return results;
     })
 
-    .factory('ItemDetails', function($http, $timeout, $q) {
+    .factory('PlayerDetails', function($http, $timeout, $q) {
         var results = {};
         function _all() {
             var d = $q.defer();
             $http
-                .get("http://uwiproject.herokuapp.com/api/stats/player/" + item.Player_Forename + "/" + item.Player_Surname)
+                .get("http://uwiproject.herokuapp.com/api/details/player/" + item.Player_ID)
                 .success(function(response) {
                     //caching data
-                    Save(response, "player");
+                    Save(response, "playerdetails");
                     d.resolve(response);
                 })
                 .error(function(data) {
@@ -132,10 +120,6 @@ angular.module('app.services', [])
         results.all = _all;
         return results;
     })
-
-
-
-
 
 
 
@@ -228,6 +212,25 @@ function SimplePlayerDetails(Player_ID) {
     forEach(SPD, function(s) {
         if (s.Player_ID == Player_ID) {
             temp = s;
+        }
+    });
+    return temp;
+}
+
+
+function GameID2Game(games) {
+    forEach(games, function(game) {
+        game.name = GameID(game.Game_ID);
+    });
+    return games;
+}
+
+function GameID(gameid) {
+    var simplegames = Update("newgames"),
+        temp = {};
+    forEach(simplegames, function(game) {
+        if (game.Game_ID == gameid) {
+            temp = game.game;
         }
     });
     return temp;

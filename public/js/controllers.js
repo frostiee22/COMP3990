@@ -23,27 +23,34 @@ angular.module('app.controllers', [])
 
         // COACH FORM
         $scope.submitCoach = function() {
-            var link = "http://uwiproject.herokuapp.com/Coach/" + $scope.coach.fname + "/" + $scope.coach.lname;
-            console.log(link);
-            $http
-                .get(link)
-                .success(function(response) {
-                    if (response.data == 'suc') {
-                        console.log(response);
-                        $scope.response = "successful";
-                        console.log(response.coachid[0].Coach_ID);
-                        $scope.coachID = response.coachid[0].Coach_ID;
-                        $scope.coach = {};
-                    }
-                    else {
-                        console.log(response);
+            var fname = $scope.coach.fname,
+                lname = $scope.coach.lname;
+
+
+            if (fname != "" && lname != "") {
+                var link = "http://uwiproject.herokuapp.com/Coach/" + fname + "/" + lname;
+                $http
+                    .get(link)
+                    .success(function(response) {
+                        if (response.data == 'suc') {
+                            console.log(response);
+                            $scope.response = "successful";
+                            console.log(response.coachid[0].Coach_ID);
+                            $scope.coachID = response.coachid[0].Coach_ID;
+                            $scope.coach = {};
+                        }
+                        else {
+                            console.log(response);
+                            $scope.response = "error uploading!";
+                        }
+                    })
+                    .error(function(data) {
+                        console.log("Unable to fetch item data");
                         $scope.response = "error uploading!";
-                    }
-                })
-                .error(function(data) {
-                    console.log("Unable to fetch item data");
-                    $scope.response = "error uploading!";
-                });
+                    });
+            }else{
+                $scope.response = "missing data!";
+            }
         };
 
 
@@ -166,15 +173,15 @@ angular.module('app.controllers', [])
                             $scope.response = "successful";
                             $scope.game = {};
                             (function() {
-                            $http
-                                .get('http://uwiproject.herokuapp.com/api/simplegame')
-                                .success(function(response) {
-                                    Save(response, "newgames");
-                                })
-                                .error(function(data) {
-                                    $scope.response = "error uploading!";
-                                });
-                        })();
+                                $http
+                                    .get('http://uwiproject.herokuapp.com/api/simplegame')
+                                    .success(function(response) {
+                                        Save(response, "newgames");
+                                    })
+                                    .error(function(data) {
+                                        $scope.response = "error uploading!";
+                                    });
+                            })();
                         }
                         else {
                             $scope.response = "error uploading!";
@@ -212,10 +219,10 @@ angular.module('app.controllers', [])
                 });
         };
     }])
-// End enterCtrl
+    // End enterCtrl
 
 
-    .controller('itemSearchCtrl', ['$scope', 'Players', 'SimpleData', '$ionicPopover', function($scope, Players, SimpleData, $ionicPopover) {
+    .controller('itemSearchCtrl', ['$scope', '$http', 'Players', 'SimpleData', '$ionicPopover', function($scope, $http, Players, SimpleData, $ionicPopover) {
         console.log("itemSearchCtrl");
         $scope.items = [{ name: 'loading...' }];
         Players.all().then(
@@ -227,22 +234,21 @@ angular.module('app.controllers', [])
             }
         );
 
-        // getting simplify data of players
-        SimpleData.all().then(
-            function(res) {
-                $scope.SimpleData = res;
-            },
-            function(err) {
-                console.error(err);
-            }
-        );
+
+        $scope.doRefresh = function() {
+            $http.get('http://uwiproject.herokuapp.com/api/simpleplayer')
+                .success(function(newItems) {
+                    $scope.items = newItems;
+                })
+                .finally(function() {
+                    $scope.$broadcast('scroll.refreshComplete');
+                });
+        };
+
 
         $scope.details = function() {
             item = {};
             item = this.item;
-            if (item.Player_Forename == "") {
-                item.Player_Forename = "[fname]";
-            }
         }
 
         /////////////////////////////////////////////////////
@@ -291,17 +297,17 @@ angular.module('app.controllers', [])
 
     }])
 
-    .controller('itemDetailsCtrl', ['$scope', 'ItemDetails', '$ionicSideMenuDelegate', function($scope, ItemDetails, $ionicSideMenuDelegate) {
-        console.log("itemDetailsCtrl");
+    .controller('PLayerDetailsCtrl', ['$scope', 'PlayerDetails', '$ionicSideMenuDelegate', function($scope, PlayerDetails, $ionicSideMenuDelegate) {
+        console.log("PlayerDetailsCtrl");
 
         $scope.toggleLeft = function() {
             $ionicSideMenuDelegate.toggleLeft();
         };
 
         $scope.stores = [{ name: 'Loading..' }];
-        ItemDetails.all().then(
+        PlayerDetails.all().then(
             function(res) {
-                $scope.stores = res;
+                $scope.stores = GameID2Game(res);
             },
             function(err) {
                 console.error(err);

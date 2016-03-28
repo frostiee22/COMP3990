@@ -1,10 +1,10 @@
 <ion-view title="Game Details">
-    <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="itemDetailsCtrl">
+    <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="PLayerDetailsCtrl">
 
         <div class="list card" ng-repeat="store in stores">
-            <div class="item item-divider">{{store.Team}} vs {{store.Opposition}} </div>
-            <div class="item item-body">Date : {{store.Date}}</div>
-            <div class="item item-body">Time Played : {{store.Time_Played}} minutes</div>
+            <div class="item item-divider">{{store.name}}</div>
+            <div class="item item-body">Date : {{store.Duels_Won}}</div>
+            <div class="item item-body">Touches : {{store.Touches}}</div>
             <div class="item item-body">Goals : {{store.Goals}}</div>
             <div class="item item-body"></div>            
         </div>

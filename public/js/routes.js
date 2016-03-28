@@ -23,8 +23,7 @@ angular.module('app.routes', [])
                 url: '/page2',
                 views: {
                     'tab1': {
-                        templateUrl: 'templates/enter.html',
-                        controller: 'enterCtrl'
+                        templateUrl: 'templates/enter.html'
                     }
                 }
             })
@@ -98,8 +97,7 @@ angular.module('app.routes', [])
                 url: '/page4',
                 views: {
                     'tab3': {
-                        templateUrl: 'templates/previousLists.html',
-                        controller: 'previousListsCtrl'
+                        templateUrl: 'templates/previousLists.html'
                     }
                 }
             })

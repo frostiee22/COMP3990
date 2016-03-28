@@ -1,6 +1,9 @@
 <ion-view title="Player Search">
     <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="itemSearchCtrl as item">
 
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+        </ion-refresher>
+
         <script id="my-popover.html" type="text/ng-template">
             <ion-popover-view>
                 <ion-header-bar>
@@ -8,14 +11,24 @@
                 </ion-header-bar>
                 <ion-content>
                     <div class="card">
-                        <div class="item item-body">Experience: <progress max="1" value="{{(SPD.Total_Successful_Passes_All + SPD.sum_duels_won + SPD.amtplayed) / (SPD.Total_Successful_Passes_All + SPD.sum_duels_won + SPD.Total_Unsuccessful_Passes_All + SPD.sum_duels_lost)}}"></div>
-                        <div class="item item-body">Attack    : <progress max="1" value="{{(SPD.sum_duels_won + (SPD.Goals*5)) / ((SPD.sum_duels_won + (SPD.Goals*5)) + SPD.sum_duels_lost)}}"></progress></div>
-                        <div class="item item-body">Defence   : <progress max="100" value="79"></div>
-                        <div class="item item-body">Endurance : <progress max="100" value="65"></div>
+                        <div class="item item-body">Experience:
+                            <progress max="1" value="{{(SPD.Total_Successful_Passes_All + SPD.sum_duels_won + SPD.amtplayed) / (SPD.Total_Successful_Passes_All + SPD.sum_duels_won + SPD.Total_Unsuccessful_Passes_All + SPD.sum_duels_lost)}}">
+                        </div>
+                        <div class="item item-body">Attack :
+                            <progress max="1" value="{{(SPD.sum_duels_won + (SPD.Goals*5)) / ((SPD.sum_duels_won + (SPD.Goals*5)) + SPD.sum_duels_lost)}}"></progress>
+                        </div>
+                        <div class="item item-body">Defence :
+                            <progress max="100" value="79">
+                        </div>
+                        <div class="item item-body">Endurance :
+                            <progress max="100" value="65">
+                        </div>
                     </div>
                 </ion-content>
             </ion-popover-view>
         </script>
+
+
 
         <div ng-init="items">
         </div>
@@ -31,7 +44,7 @@
 
         <div class="list card" collection-repeat="item in items | filter:searchText" ng-model="item.name" ui-sref="tabsController.details"
         ng-click="details()" on-hold="openPopover($event)">
-            <div class="item item-divider">{{item.Player_Forename}} {{item.Player_Surname}}</div>
+            <div class="item item-divider">{{item.name}}</div>
             <div class="item item-body"></div>
         </div>
 
