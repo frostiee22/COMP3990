@@ -12,7 +12,7 @@ var express = require('express'), 	// Import the required library
     connection = DBACCESS.returnDBConnection();
 
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 1234));
 app.use(busboy());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -208,8 +208,7 @@ app.get('/Match/:playerid/:gameid/:goals/:succesfulpasses/:unsuccesfulpasses/:to
     data.redcard = req.param("redcard");
 
 
-    sql = "INSERT INTO `player_game` (`Player_ID`, `Game_ID`, `Goals`, `Passes_Succesful`, `Passed_Unsuccessful`, `Touches`, `Duels_Won`, `Duels_Lost`, `Handballs_Conceded`, `Penalties_Conceded`, `Yellow_Cards`, `Red_Cards`) VALUES " + "(" +data.playerid+","+data.gameid+", "+data.goals+", "+data.succesfulpasses+", "+data.unsuccesfulpasses+", "+data.touches+", "+data.duelswon+", "+data.duelslost+", "+handballsconceded+","+penaltiesconceded+", "+yellowcard+", "+redcard+")";
-
+    sql = "INSERT INTO `player_game` (`Player_ID`, `Game_ID`, `Goals`, `Passes_Succesful`, `Passed_Unsuccessful`, `Touches`, `Duels_Won`, `Duels_Lost`, `Handballs_Conceded`, `Penalties_Conceded`, `Yellow_Cards`, `Red_Cards`) VALUES " + "(" +data.playerid+","+data.gameid+", "+data.goals+", "+data.succesfulpasses+", "+data.unsuccesfulpasses+", "+data.touches+", "+data.duelswon+", "+data.duelslost+", "+data.handballsconceded+","+data.penaltiesconceded+", "+data.yellowcard+", "+data.redcard+")";
     connection.query(sql, function(err, rows) {
         if (err) {
             res.json({data: "err"});
