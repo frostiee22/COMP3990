@@ -102,20 +102,21 @@ app.get('/api/:table', function(req, res) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // getting data from forms
 
-app.get('/Coach/:fname/:lname', function(req, res) {
+app.get('/Coach/:fname/:lname/:username', function(req, res) {
 
     var sql, data = {};
     data.lname = req.param("lname");
     data.fname = req.param("fname");
+    data.username = req.param("username");
 
-    sql = "INSERT INTO `coach` (`Coach_Forename`,`Coach_Surname`) VALUES ('" + data.fname + "','" + data.lname + "');";
+    sql = "INSERT INTO `coach` (`Coach_Forename`,`Coach_Surname`,`username`) VALUES ('" + data.fname + "','" + data.lname + "','"+data.username+"');";
 
     connection.query(sql, function(err, rows) {
         if (err) {
             res.json({data: "err"});
         } else {
 
-        	sql = "SELECT * FROM `coach` WHERE `Coach_Surname` LIKE '"+data.lname+"' AND `Coach_Forename` LIKE '"+data.fname+"'";
+        	sql = "SELECT * FROM `coach` WHERE `username` LIKE '"+data.username+"'";
 		    connection.query(sql, function(err, rows) {
 		        if (err) {
 		            res.json({data: "err",coachid: "err"});
