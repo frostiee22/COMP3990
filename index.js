@@ -52,24 +52,13 @@ app.get('/api/stats/goals/:num', function(req, res) {
 
 app.get('/api/details/player/:ID', function(req, res) {
     var playerID = req.param("ID");
-
-    if (firstname != "[fname]") {
-        connection.query("SELECT * FROM `player_game` WHERE Player_Forename = '" + firstname + "'  and Player_Surname ='" + lastname + "' ORDER BY `Goals` DESC;", function(err, rows) {
+        connection.query("SELECT * FROM `player_game` WHERE Player_ID = " + playerID + " ORDER BY `Goals` DESC;", function(err, rows) {
             if (err) {
                 return err;
             } else {
                 res.json(rows);
             }
         });
-    } else {
-        connection.query("SELECT * FROM `stats` WHERE Player_Forename = '' and Player_Surname ='" + lastname + "' ORDER BY `Goals` DESC;", function(err, rows) {
-            if (err) {
-                return err;
-            } else {
-                res.json(rows);
-            }
-        });
-    }
 });
 
 app.get('/api/stats/:start/:end', function(req, res) {
@@ -219,8 +208,7 @@ app.get('/Match/:playerid/:gameid/:goals/:succesfulpasses/:unsuccesfulpasses/:to
     data.redcard = req.param("redcard");
 
 
-    sql = "INSERT INTO `player_game` (`Player_ID`, `Game_ID`, `Goals`, `Passes_Succesful`, `Passed_Unsuccessful`, `Touches`, `Duels_Won`, `Duels_Lost`, `Handballs_Conceded`, `Penalties_Conceded`, `Yellow_Cards`, `Red_Cards`) VALUES " + 
-    "(" +data.playerid+","+data.gameid+", "+data.goals+", "+data.succesfulpasses+", "+data.unsuccesfulpasses+", "+data.touches+", "+data.duelswon+", "+data.duelslost+", "+handballsconceded+","+penaltiesconceded+", "+yellowcard+", "+redcard+")";
+    sql = "INSERT INTO `player_game` (`Player_ID`, `Game_ID`, `Goals`, `Passes_Succesful`, `Passed_Unsuccessful`, `Touches`, `Duels_Won`, `Duels_Lost`, `Handballs_Conceded`, `Penalties_Conceded`, `Yellow_Cards`, `Red_Cards`) VALUES " + "(" +data.playerid+","+data.gameid+", "+data.goals+", "+data.succesfulpasses+", "+data.unsuccesfulpasses+", "+data.touches+", "+data.duelswon+", "+data.duelslost+", "+handballsconceded+","+penaltiesconceded+", "+yellowcard+", "+redcard+")";
 
     connection.query(sql, function(err, rows) {
         if (err) {
