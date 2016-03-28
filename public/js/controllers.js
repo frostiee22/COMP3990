@@ -24,11 +24,11 @@ angular.module('app.controllers', [])
         // COACH FORM
         $scope.submitCoach = function() {
             var fname = $scope.coach.fname,
-                lname = $scope.coach.lname;
+                lname = $scope.coach.lname,
+                username = $scope.coach.username;
 
 
-            if (fname != "" && lname != "") {
-                var link = "http://uwiproject.herokuapp.com/Coach/" + fname + "/" + lname;
+                var link = "http://uwiproject.herokuapp.com/Coach/" + fname + "/" + lname+ "/" + username;
                 $http
                     .get(link)
                     .success(function(response) {
@@ -40,7 +40,6 @@ angular.module('app.controllers', [])
                             $scope.coach = {};
                         }
                         else {
-                            console.log(response);
                             $scope.response = "error uploading!";
                         }
                     })
@@ -48,9 +47,6 @@ angular.module('app.controllers', [])
                         console.log("Unable to fetch item data");
                         $scope.response = "error uploading!";
                     });
-            }else{
-                $scope.response = "missing data!";
-            }
         };
 
 
