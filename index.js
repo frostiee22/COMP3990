@@ -50,12 +50,11 @@ app.get('/api/stats/goals/:num', function(req, res) {
 });
 
 
-app.get('/api/stats/player/:firstname/:lastname', function(req, res) {
-    var firstname = req.param("firstname"),
-        lastname = req.param("lastname");
+app.get('/api/details/player/:ID', function(req, res) {
+    var playerID = req.param("ID");
 
     if (firstname != "[fname]") {
-        connection.query("SELECT * FROM `stats` WHERE Player_Forename = '" + firstname + "'  and Player_Surname ='" + lastname + "' ORDER BY `Goals` DESC;", function(err, rows) {
+        connection.query("SELECT * FROM `player_game` WHERE Player_Forename = '" + firstname + "'  and Player_Surname ='" + lastname + "' ORDER BY `Goals` DESC;", function(err, rows) {
             if (err) {
                 return err;
             } else {
