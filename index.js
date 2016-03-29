@@ -229,35 +229,35 @@ app.get('/Match/:playerid/:gameid/:goals/:succesfulpasses/:unsuccesfulpasses/:to
 ///////////////////////////////////////////////////////////////////
 // WIPE DB
 app.get('/DELETE', function(req, res){
-	connection.query("DELETE FROM player_game", function(err, rows) {
+	connection.query("DELETE FROM `player_game`", function(err, rows) {
 		if (err) {
-		    // do nothing
+		   console.log("error deleting player_game");
 		} else {
-			    connection.query("DELETE FROM player", function(err, rows) {
-			if (err) {
-			    // do nothing
-			} else {
-				    connection.query("DELETE FROM game", function(err, rows) {
+			connection.query("DELETE FROM `player`", function(err, rows) {
 				if (err) {
-				    // do nothing
+				    console.log("error deleting player");
 				} else {
-					connection.query("DELETE FROM team", function(err, rows) {
+					connection.query("DELETE FROM `game`", function(err, rows) {
 						if (err) {
-						    // do nothing
+						    console.log("error deleting game");g
 						} else {
-							connection.query("DELETE FROM coach", function(err, rows) {
+							connection.query("DELETE FROM `team`", function(err, rows) {
 								if (err) {
-								    // do nothing
+								    console.log("error deleting team");
 								} else {
-								    res.json(message :"Data deleted");
+									connection.query("DELETE FROM `coach`", function(err, rows) {
+										if (err) {
+										    console.log("error deleting coach");
+										} else {
+										    res.json({message :"Data deleted"});
+										}
+									});
 								}
 							});
 						}
 					});
 				}
 			});
-			}
-		});
 		}
 	});
 	
