@@ -249,7 +249,7 @@ app.get('/DELETE', function(req, res){
 								if (err) {
 								    // do nothing
 								} else {
-								    res.json("message :"Data deleted");
+								    res.json(message :"Data deleted");
 								}
 							});
 						}
