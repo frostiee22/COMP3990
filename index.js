@@ -226,6 +226,46 @@ app.get('/Match/:playerid/:gameid/:goals/:succesfulpasses/:unsuccesfulpasses/:to
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+///////////////////////////////////////////////////////////////////
+// WIPE DB
+app.get('/DELETE', function(req, res){
+	connection.query("DELETE FROM player_game", function(err, rows) {
+		if (err) {
+		    // do nothing
+		} else {
+			    connection.query("DELETE FROM player", function(err, rows) {
+			if (err) {
+			    // do nothing
+			} else {
+				    connection.query("DELETE FROM game", function(err, rows) {
+				if (err) {
+				    // do nothing
+				} else {
+					connection.query("DELETE FROM team", function(err, rows) {
+						if (err) {
+						    // do nothing
+						} else {
+							connection.query("DELETE FROM coach", function(err, rows) {
+								if (err) {
+								    // do nothing
+								} else {
+								    res.json("message :"Data deleted");
+								}
+							});
+						}
+					});
+				}
+			});
+			}
+		});
+		}
+	});
+	
+})
+
+
+
+
 
 
 app.listen(app.get('port'), function() {
