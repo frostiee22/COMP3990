@@ -99,6 +99,20 @@ app.get('/api/:table', function(req, res) {
 
 
 
+app.get('/api/pos/:val',function(req,res){
+
+	var pos = req.param("val");
+
+	connection.query('SELECT * FROM `playeravg` WHERE Position_ID = ' + val, function(err, rows) {
+        if (err) {
+            return err;
+        } else {
+            res.json(rows);
+        }
+    });
+})
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // getting data from forms
 
