@@ -9,7 +9,7 @@ angular.module('app.controllers', [])
         getData.update();
     }])
 
-    .controller('enterCtrl', ['$scope', '$http', '$ionicSideMenuDelegate', '$ionicActionSheet', '$timeout', function($scope, $http, $ionicSideMenuDelegate, $ionicActionSheet, $timeout) {
+    .controller('enterCtrl', ['$scope', '$http', '$ionicSideMenuDelegate', '$ionicActionSheet', '$timeout', 'SimpleData', function($scope, $http, $ionicSideMenuDelegate, $ionicActionSheet, $timeout, SimpleData) {
         console.log("enterCtrl launched");
 
         $scope.toggleLeft = function() {
@@ -28,25 +28,25 @@ angular.module('app.controllers', [])
                 username = $scope.coach.username;
 
 
-                var link = "http://uwiproject.herokuapp.com/Coach/" + fname + "/" + lname+ "/" + username;
-                $http
-                    .get(link)
-                    .success(function(response) {
-                        if (response.data == 'suc') {
-                            console.log(response);
-                            $scope.response = "successful";
-                            console.log(response.coachid[0].Coach_ID);
-                            $scope.coachID = response.coachid[0].Coach_ID;
-                            $scope.coach = {};
-                        }
-                        else {
-                            $scope.response = "error uploading!";
-                        }
-                    })
-                    .error(function(data) {
-                        console.log("Unable to fetch item data");
+            var link = "http://uwiproject.herokuapp.com/Coach/" + fname + "/" + lname + "/" + username;
+            $http
+                .get(link)
+                .success(function(response) {
+                    if (response.data == 'suc') {
+                        console.log(response);
+                        $scope.response = "successful";
+                        console.log(response.coachid[0].Coach_ID);
+                        $scope.coachID = response.coachid[0].Coach_ID;
+                        $scope.coach = {};
+                    }
+                    else {
                         $scope.response = "error uploading!";
-                    });
+                    }
+                })
+                .error(function(data) {
+                    console.log("Unable to fetch item data");
+                    $scope.response = "error uploading!";
+                });
         };
 
 
@@ -205,6 +205,14 @@ angular.module('app.controllers', [])
                     if (response.data == 'suc') {
                         $scope.response = "successful";
                         $scope.match = {};
+                        SimpleData.all().then(
+                            function(res) {
+                                Save(res, "SimpleData");
+                            },
+                            function(err) {
+                                console.log(err);
+                            }
+                        );
                     }
                     else {
                         $scope.response = "error uploading!";
@@ -230,6 +238,15 @@ angular.module('app.controllers', [])
             }
         );
 
+        SimpleData.all().then(
+            function(res) {
+                Save(res, "SimpleData");
+            },
+            function(err) {
+                console.log(err);
+            }
+        );
+
 
         $scope.doRefresh = function() {
             $http.get('http://uwiproject.herokuapp.com/api/simpleplayer')
@@ -249,7 +266,7 @@ angular.module('app.controllers', [])
 
         /////////////////////////////////////////////////////
         // POP OVER
-        console.log("hold :D");
+
         // .fromTemplate() method
         var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
 
@@ -269,7 +286,7 @@ angular.module('app.controllers', [])
             item = this.item;
             $scope.name = item;
             var temp = SimplePlayerDetails(item.Player_ID);
-            console.log(temp);
+            temp = bestPosition(temp, Update("gameavg"));
             $scope.SPD = temp;
             $scope.popover.show($event);
         };

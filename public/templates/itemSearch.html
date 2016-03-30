@@ -7,21 +7,21 @@
         <script id="my-popover.html" type="text/ng-template">
             <ion-popover-view>
                 <ion-header-bar>
-                    <h1 class="title">{{name.Player_Forename}} {{name.Player_Surname}} Stats</h1>
+                    <h1 class="title">{{name.name}} Position</h1>
                 </ion-header-bar>
                 <ion-content>
                     <div class="card">
-                        <div class="item item-body">Experience:
-                            <progress max="1" value="{{(SPD.Total_Successful_Passes_All + SPD.sum_duels_won + SPD.amtplayed) / (SPD.Total_Successful_Passes_All + SPD.sum_duels_won + SPD.Total_Unsuccessful_Passes_All + SPD.sum_duels_lost)}}">
+                        <div class="item item-body">Attacker : {{SPD.stat.attacker*100}}%
+                            <progress max="1" value="{{SPD.stat.attacker}}">
                         </div>
-                        <div class="item item-body">Attack :
-                            <progress max="1" value="{{(SPD.sum_duels_won + (SPD.Goals*5)) / ((SPD.sum_duels_won + (SPD.Goals*5)) + SPD.sum_duels_lost)}}"></progress>
+                        <div class="item item-body">Defender : {{SPD.stat.defender*100}}%
+                            <progress max="1" value="{{SPD.stat.defender}}">
                         </div>
-                        <div class="item item-body">Defence :
-                            <progress max="100" value="79">
+                        <div class="item item-body">MidFielder : {{SPD.stat.midfielder*100}}%
+                            <progress max="1" value="{{SPD.stat.midfielder}}">
                         </div>
-                        <div class="item item-body">Endurance :
-                            <progress max="100" value="65">
+                        <div class="item item-body">Goal Keeper : {{SPD.stat.keeper*100}}%
+                            <progress max="1" value="{{SPD.stat.keeper}}">
                         </div>
                     </div>
                 </ion-content>
