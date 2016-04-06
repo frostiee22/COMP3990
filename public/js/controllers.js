@@ -337,9 +337,8 @@ angular.module('app.controllers', [])
                 else {
                     // do nothing
                 }
-                console.log(res);
                 $scope.labels = ['Goals','Successful Passes','Unsuccessful Passes','Touches','Duels won','Duels lost','Handballs Conceded'];
-                $scope.series = ['Average','Player'];
+                $scope.series = ['Average',item.name];
                 $scope.data = [
                     [gameavg[pos].Goals,gameavg[pos].Total_Successful_Passes_All,gameavg[pos].Total_Unsuccessful_Passes_All,gameavg[pos].Touches,gameavg[pos].Duels_won,gameavg[pos].Duels_lost,gameavg[pos].Handballs_Conceded],
                     [res[0].Goals,res[0].Total_Successful_Passes_All,res[0].Total_Unsuccessful_Passes_All,res[0].Touches,res[0].sum_duels_won,res[0].sum_duels_lost,res[0].Handballs_Conceded]
