@@ -83,7 +83,26 @@ angular.module('app.services', [])
                     console.log("Unable to fetch item data");
                 });
             return d.promise;
-        }
+        }   
+        results.all = _all;
+        return results;
+    })
+    
+    
+    .factory('PlayerAVG', function($http, $timeout, $q) {
+        var results = {};
+        function _all() {
+            var d = $q.defer();
+            $http
+                .get("http://uwiproject.herokuapp.com/api/playeravg/" + item.Player_ID)
+                .success(function(response) {
+                    d.resolve(response);
+                })
+                .error(function(data) {
+                    console.log("Unable to fetch playeravg data");
+                });
+            return d.promise;
+        }   
         results.all = _all;
         return results;
     })
@@ -96,13 +115,13 @@ angular.module('app.services', [])
             var d = $q.defer();
 
             $http
-                .get("http://uwiproject.herokuapp.com/api/stats/goals/5")
+                .get("http://uwiproject.herokuapp.com/api/gameavg")
                 .success(function(response) {
                     d.resolve(response);
                 })
                 .error(function(data) {
-                    alert("Unable to fetch most goals");
-                    console.log("Unable to fetch most goals");
+                    alert("Unable to fetch");
+                    console.log("Unable to fetch");
                 });
             return d.promise;
         }
