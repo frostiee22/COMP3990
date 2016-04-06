@@ -330,10 +330,10 @@ angular.module('app.controllers', [])
         PlayerAVG.all().then(
             function(res){
                 var pos = 0, gameavg = Update("gameavg");
-                if (item.Position_Id == 1) pos = 0;
-                else if (item.Position_Id == 2) pos = 1;
-                else if (item.Position_Id == 4) pos = 2;
-                else if (item.Position_Id == 6) pos = 3;
+                if (item.Position_ID == 1) pos = 0;
+                else if (item.Position_ID == 2) pos = 1;
+                else if (item.Position_ID == 4) pos = 2;
+                else if (item.Position_ID == 6) pos = 3;
                 else {
                     // do nothing
                 }
