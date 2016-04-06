@@ -61,6 +61,18 @@ app.get('/api/details/player/:ID', function(req, res) {
         });
 });
 
+app.get('/api/playeravg/:ID', function(req, res) {
+    var playerID = req.param("ID");
+        connection.query("SELECT * FROM `playeravg` WHERE Player_ID = " + playerID, function(err, rows) {
+            if (err) {
+                return err;
+            } else {
+                res.json(rows);
+            }
+        });
+});
+
+
 app.get('/api/stats/:start/:end', function(req, res) {
     var start = req.param("start"),
         end = req.param("end");
