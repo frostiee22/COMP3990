@@ -1,3 +1,27 @@
-<ion-view title="Previous lists">
-    <ion-content overflow-scroll="true" padding="true" class="has-header"></ion-content>
+<ion-view title="Best Team">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <form ng-submit="BestTeam()">
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Coach ID</span>
+                    <input type="text" name="coachid" placeholder="Coach ID" ng-model="team.coachid">
+                </label>
+
+                <button class="button button-block button-positive">
+                    Get Best Team
+                </button>
+            </div>
+        </form>
+        <div class="card list">
+            <div class="item item-text-wrap">
+                the best team
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                Response: <b ng-bind="response"></b>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>

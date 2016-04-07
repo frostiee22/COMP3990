@@ -83,12 +83,12 @@ angular.module('app.services', [])
                     console.log("Unable to fetch item data");
                 });
             return d.promise;
-        }   
+        }
         results.all = _all;
         return results;
     })
-    
-    
+
+
     .factory('PlayerAVG', function($http, $timeout, $q) {
         var results = {};
         function _all() {
@@ -102,7 +102,7 @@ angular.module('app.services', [])
                     console.log("Unable to fetch playeravg data");
                 });
             return d.promise;
-        }   
+        }
         results.all = _all;
         return results;
     })
@@ -268,6 +268,26 @@ function GameID(gameid) {
 }
 
 
+function PosIDToName(players) {
+    var temp = {}, name;
+    forEach(players, function(player) {
+        if (player.Position_ID == 1)
+            name = 'GoldKeeper';
+        else if (player.Position_ID == 2)
+            name = 'Defender';
+        else if (player.Position_ID == 4)
+            name = 'Mid Fielder';
+        else if (player.Position_ID == 6)
+            name = 'Attacker';
+        else {
+            name = 'not define'
+        }
+        player.pos = name;
+    });
+    return players;
+}
+
+
 ////////////////////////////////////////////////////////////////////////
 // EXPERT ALGORITHM
 
@@ -286,13 +306,10 @@ function pos(id) {
 
 
 
-//bestPositionPlayers(attackersData, data);
-
 function bestPositionPlayers(PlayersData, data) {
     forEach(PlayersData, function(player) {
         bestPosition(player, data);
     });
-    console.log(bestAttacker(PlayersData, data));
 }
 
 
@@ -312,11 +329,11 @@ function bestPosition(player, d) {
     for (var i = 0; i < 4; i++)
         arr[i] = Math.abs(player.Touches - d[i].Touches);
     pos(arr.indexOf(Math.min.apply(Math, arr)));
-    
+
     for (var i = 0; i < 4; i++)
         arr[i] = Math.abs(player.Total_Successful_Passes_All - d[i].Total_Successful_Passes_All);
     pos(arr.indexOf(Math.min.apply(Math, arr)));
-    
+
     for (var i = 0; i < 4; i++)
         arr[i] = Math.abs(player.Total_Unsuccessful_Passes_All - d[i].Total_Unsuccessful_Passes_All);
     pos(arr.indexOf(Math.min.apply(Math, arr)));
@@ -328,7 +345,7 @@ function bestPosition(player, d) {
     for (var i = 0; i < 4; i++)
         arr[i] = Math.abs(player.sum_duels_lost - d[i].Duels_lost);
     pos(arr.indexOf(Math.min.apply(Math, arr)));
-    
+
 
     for (var i = 0; i < 4; i++)
         arr[i] = Math.abs(player.Handballs_Conceded - d[i].Handballs_Conceded);
@@ -353,38 +370,140 @@ function bestPosition(player, d) {
     player.stat.defender = (defender / col);
     player.stat.midfielder = (midfielder / col);
     player.stat.attacker = (attacker / col);
-
-
-    // console.log("keeper: " + (keeper / col));
-    // console.log("defender: " + (defender / col));
-    // console.log("midfielder: " + (midfielder / col));
-    // console.log("attacker: " + (attacker / col));
-    // console.log("*********************************\n");
-
     return player;
 }
 
 
-function bestAttacker(attackersData, gameavg) {
-
-    var best = 0;
-    var a = b = c = 0.0;
-    for (var i = 0; i < attackersData.length; i++) {
-        a = attackersData[i].Goals - gameavg[3].Goals;
-        b = attackersData[i].Touches - gameavg[3].Touches;
-        c = attackersData[i].sum_duels_won - gameavg[3].Duels_won;
-
-        attackersData[i].rank = a * b * c;
-    }
-
-    attackersData.sort(function(a, b) {
-        return parseFloat(b.rank) - parseFloat(a.rank);
+var formation = [1, 3, 3, 3];
+//console.log(bestTeam(PlayersData, data, formation));
+function bestTeam(PlayersData, formation) {
+    var data = Update("gameavg");
+    var keepersData = [], defendersData = [], midfieldersData = [], attackersData = [];
+    forEach(PlayersData, function(Player) {
+        if (Player.Position_Id == 1)
+            keepersData.push(Player);
+        else if (Player.Position_Id == 2)
+            defendersData.push(Player);
+        else if (Player.Position_Id == 4)
+            midfieldersData.push(Player);
+        else if (Player.Position_Id == 6)
+            attackersData.push(Player);
+        else {
+            // Position don't exist
+        }
     });
-    return attackersData;
+
+
+    var kTeam = bestKeeper(keepersData, data);
+    var dTeam = bestDefender(defendersData, data);
+    var mTeam = bestMidfielder(midfieldersData, data);
+    var aTeam = bestAttacker(attackersData, data);
+
+    var team = [];
+    var i;
+    for (i = 0; i < formation[0]; i++)
+        team.push(kTeam[i]);
+
+    for (i = 0; i < formation[1]; i++)
+        team.push(dTeam[i]);
+
+    for (i = 0; i < formation[2]; i++)
+        team.push(mTeam[i]);
+
+    for (i = 0; i < formation[3]; i++)
+        team.push(aTeam[i]);
+
+    return team;
+
+
 }
 
+function bestKeeper(playersData, gameavg) {
+
+    var best = 0;
+    var v = 0.0;
+    for (var i = 0; i < playersData.length; i++) {
+
+        v += (playersData[i].Touches / gameavg[0].Touches);
+        v += (playersData[i].sum_duels_won / gameavg[0].Duels_won);
+        //v += (playersData[i].Blocks / gameavg[0].Blocks);
+        v -= (playersData[i].Penalties_Conceded / gameavg[0].Penalties_Conceded);
+        // v -= (playersData[i].Goals_Conceded / gameavg[0].Goals_Conceded);
+        // v == (playersData[i].Goals_Saved / gameavg[0].Goals_Saved);
+
+        playersData[i].rank = v;
+        v = 0.0;
+    }
+
+    playersData.sort(function(a, b) {
+        return parseFloat(b.rank) - parseFloat(a.rank);
+    });
+    return playersData;
+}
+
+function bestDefender(playersData, gameavg) {
+
+    var best = 0;
+    var v = 0.0;
+    for (var i = 0; i < playersData.length; i++) {
+
+        v += (playersData[i].Touches / gameavg[1].Touches);
+        v += (playersData[i].sum_duels_won / gameavg[1].Duels_won);
+        // v += (playersData[i].Blocks / gameavg[1].Blocks);
 
 
+        playersData[i].rank = v;
+        v = 0.0;
+    }
+
+    playersData.sort(function(a, b) {
+        return parseFloat(b.rank) - parseFloat(a.rank);
+    });
+    return playersData;
+}
+
+function bestMidfielder(playersData, gameavg) {
+
+    var best = 0;
+    var v = 0.0;
+    for (var i = 0; i < playersData.length; i++) {
+        v += (playersData[i].Goals / gameavg[2].Goals);
+        // v += (playersData[i].Assists / gameavg[2].Assists);
+        v += (playersData[i].Touches / gameavg[2].Touches);
+        v += (playersData[i].sum_duels_won / gameavg[2].Duels_won);
+        // v += (playersData[i].Blocks / gameavg[2].Blocks);
+        v -= (playersData[i].Blocked_Shots / gameavg[2].Blocked_Shots);
+
+        playersData[i].rank = v;
+        v = 0.0;
+    }
+
+    playersData.sort(function(a, b) {
+        return parseFloat(b.rank) - parseFloat(a.rank);
+    });
+    return playersData;
+}
+
+function bestAttacker(playersData, gameavg) {
+
+    var best = 0;
+    var v = 0.0;
+    for (var i = 0; i < playersData.length; i++) {
+        v += (playersData[i].Goals / gameavg[3].Goals);
+        // v += (playersData[i].Assists / gameavg[3].Assists);
+        v += (playersData[i].Touches / gameavg[3].Touches);
+        v += (playersData[i].sum_duels_won / gameavg[3].Duels_won);
+        // v -= (playersData[i].Blocked_Shots / gameavg[3].Blocked_Shots);
+
+        playersData[i].rank = v;
+        v = 0.0;
+    }
+
+    playersData.sort(function(a, b) {
+        return parseFloat(b.rank) - parseFloat(a.rank);
+    });
+    return playersData;
+}
 
 
 

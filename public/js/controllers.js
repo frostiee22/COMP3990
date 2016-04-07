@@ -231,7 +231,7 @@ angular.module('app.controllers', [])
         $scope.items = [{ name: 'loading...' }];
         Players.all().then(
             function(res) {
-                $scope.items = res;
+                $scope.items = PosIDToName(res);
             },
             function(err) {
                 console.error(err);
