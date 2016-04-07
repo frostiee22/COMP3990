@@ -272,7 +272,7 @@ function PosIDToName(players) {
     var temp = {}, name;
     forEach(players, function(player) {
         if (player.Position_ID == 1)
-            name = 'GoldKeeper';
+            name = 'GoalKeeper';
         else if (player.Position_ID == 2)
             name = 'Defender';
         else if (player.Position_ID == 4)
