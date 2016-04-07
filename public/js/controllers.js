@@ -251,7 +251,7 @@ angular.module('app.controllers', [])
         $scope.doRefresh = function() {
             $http.get('http://uwiproject.herokuapp.com/api/simpleplayer')
                 .success(function(newItems) {
-                    $scope.items = newItems;
+                    $scope.items = PosIDToName(newItems);
                 })
                 .finally(function() {
                     $scope.$broadcast('scroll.refreshComplete');
