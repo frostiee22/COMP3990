@@ -152,6 +152,26 @@ angular.module('app.services', [])
     })
 
 
+    // get coach players
+    .factory('CoachPlayers', function($http, $timeout, $q) {
+        var results = {};
+        function _all() {
+            var d = $q.defer();
+            $http
+                .get("http://uwiproject.herokuapp.com/api/coach/players/" + item.Coach_ID)
+                .success(function(response) {
+                    d.resolve(response);
+                })
+                .error(function(data) {
+
+                });
+            return d.promise;
+        }
+        results.all = _all;
+        return results;
+    })
+
+
 
 
 ////////////////////////////////////////////////////////
@@ -271,13 +291,13 @@ function GameID(gameid) {
 function PosIDToName(players) {
     var temp = {}, name;
     forEach(players, function(player) {
-        if (player.Position_ID == 1)
+        if (player.Position_ID == 1 || player.Position_Id == 1)
             name = 'GoalKeeper';
-        else if (player.Position_ID == 2)
+        else if (player.Position_ID == 2 || player.Position_Id == 2)
             name = 'Defender';
-        else if (player.Position_ID == 4)
+        else if (player.Position_ID == 4 || player.Position_Id == 4)
             name = 'Mid Fielder';
-        else if (player.Position_ID == 6)
+        else if (player.Position_ID == 6 || player.Position_Id == 6)
             name = 'Attacker';
         else {
             name = 'not define'
@@ -376,7 +396,8 @@ function bestPosition(player, d) {
 
 var formation = [1, 3, 3, 3];
 //console.log(bestTeam(PlayersData, data, formation));
-function bestTeam(PlayersData, formation) {
+function bestTeam(Players, formation) {
+    var PlayersData = PosIDToName(Players);
     var data = Update("gameavg");
     var keepersData = [], defendersData = [], midfieldersData = [], attackersData = [];
     forEach(PlayersData, function(Player) {
@@ -399,8 +420,9 @@ function bestTeam(PlayersData, formation) {
     var mTeam = bestMidfielder(midfieldersData, data);
     var aTeam = bestAttacker(attackersData, data);
 
-    var team = [];
-    var i;
+    var team = [],i;
+    team.k = [], team.d = [], team.m = [], team.a = [];
+    
     for (i = 0; i < formation[0]; i++)
         team.push(kTeam[i]);
 

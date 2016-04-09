@@ -310,7 +310,7 @@ angular.module('app.controllers', [])
 
     }])
 
-    .controller('PLayerDetailsCtrl', ['$scope', 'PlayerDetails','PlayerAVG', '$ionicSideMenuDelegate', function($scope, PlayerDetails, PlayerAVG, $ionicSideMenuDelegate) {
+    .controller('PLayerDetailsCtrl', ['$scope', 'PlayerDetails', 'PlayerAVG', '$ionicSideMenuDelegate', function($scope, PlayerDetails, PlayerAVG, $ionicSideMenuDelegate) {
         console.log("PlayerDetailsCtrl");
 
         $scope.toggleLeft = function() {
@@ -326,9 +326,9 @@ angular.module('app.controllers', [])
                 console.error(err);
             }
         );
-        
+
         PlayerAVG.all().then(
-            function(res){
+            function(res) {
                 var pos = 0, gameavg = Update("gameavg");
                 if (item.Position_ID == 1) pos = 0;
                 else if (item.Position_ID == 2) pos = 1;
@@ -337,37 +337,52 @@ angular.module('app.controllers', [])
                 else {
                     // do nothing
                 }
-                $scope.labels = ['Goals','Successful Passes','Unsuccessful Passes','Touches','Duels won','Duels lost','Handballs Conceded'];
-                $scope.series = ['Average',item.name];
+                $scope.labels = ['Goals', 'Successful Passes', 'Unsuccessful Passes', 'Touches', 'Duels won', 'Duels lost', 'Handballs Conceded'];
+                $scope.series = ['Average', item.name];
                 $scope.data = [
-                    [gameavg[pos].Goals,gameavg[pos].Total_Successful_Passes_All,gameavg[pos].Total_Unsuccessful_Passes_All,gameavg[pos].Touches,gameavg[pos].Duels_won,gameavg[pos].Duels_lost,gameavg[pos].Handballs_Conceded],
-                    [res[0].Goals,res[0].Total_Successful_Passes_All,res[0].Total_Unsuccessful_Passes_All,res[0].Touches,res[0].sum_duels_won,res[0].sum_duels_lost,res[0].Handballs_Conceded]
+                    [gameavg[pos].Goals, gameavg[pos].Total_Successful_Passes_All, gameavg[pos].Total_Unsuccessful_Passes_All, gameavg[pos].Touches, gameavg[pos].Duels_won, gameavg[pos].Duels_lost, gameavg[pos].Handballs_Conceded],
+                    [res[0].Goals, res[0].Total_Successful_Passes_All, res[0].Total_Unsuccessful_Passes_All, res[0].Touches, res[0].sum_duels_won, res[0].sum_duels_lost, res[0].Handballs_Conceded]
                 ];
             },
-            function(err){
+            function(err) {
                 console.log(err);
             }
         );
-        
-        
+
+
     }])
 
-    .controller('previousListsCtrl', function($scope) {
-
-    })
+    .controller('previousListsCtrl', ['$scope', 'CoachPlayers', function($scope, CoachPlayers) {
+        console.log("BEST TEAM");
+        $scope.BestTeam = function() {
+            item = {};
+            item.Coach_ID = $scope.Coach_ID
+            console.log(item.Coach_ID);
+            CoachPlayers.all().then(
+                function(res) {
+                    //console.log(res)
+                    var formation = [1,3,3,3];
+                    $scope.team = bestTeam(res,formation);
+                },
+                function(err) {
+                    console.error(err);
+                }
+            );
+        }
+    }])
 
     .controller('homeCtrl', ['$scope', '$http', 'TopGoals', function($scope, $http, TopGoals) {
         console.log("homeCtrl");
         TopGoals.all().then(
             function(stats) {
                 //$scope.labels = ['Goals','Successful Passesc','Unsuccessful Passes'];
-                $scope.labels = ['1','2','3','4','5','6'];
-                $scope.series = ['Goalkeeper','Defender','Midfielder','Attacker'];
+                $scope.labels = ['1', '2', '3', '4', '5', '6'];
+                $scope.series = ['Goalkeeper', 'Defender', 'Midfielder', 'Attacker'];
                 $scope.data = [
-                    [stats[0].Goals, stats[0].Total_Successful_Passes_All,stats[0].Total_Unsuccessful_Passes_All,stats[0].Touches,stats[0].Duels_won, stats[0].Duels_lost],
-                    [stats[1].Goals, stats[1].Total_Successful_Passes_All,stats[1].Total_Unsuccessful_Passes_All,stats[1].Touches,stats[1].Duels_won, stats[1].Duels_lost],
-                    [stats[2].Goals, stats[2].Total_Successful_Passes_All,stats[2].Total_Unsuccessful_Passes_All,stats[2].Touches,stats[2].Duels_won, stats[2].Duels_lost],
-                    [stats[3].Goals, stats[3].Total_Successful_Passes_All,stats[3].Total_Unsuccessful_Passes_All,stats[3].Touches,stats[3].Duels_won, stats[3].Duels_lost]
+                    [stats[0].Goals, stats[0].Total_Successful_Passes_All, stats[0].Total_Unsuccessful_Passes_All, stats[0].Touches, stats[0].Duels_won, stats[0].Duels_lost],
+                    [stats[1].Goals, stats[1].Total_Successful_Passes_All, stats[1].Total_Unsuccessful_Passes_All, stats[1].Touches, stats[1].Duels_won, stats[1].Duels_lost],
+                    [stats[2].Goals, stats[2].Total_Successful_Passes_All, stats[2].Total_Unsuccessful_Passes_All, stats[2].Touches, stats[2].Duels_won, stats[2].Duels_lost],
+                    [stats[3].Goals, stats[3].Total_Successful_Passes_All, stats[3].Total_Unsuccessful_Passes_All, stats[3].Touches, stats[3].Duels_won, stats[3].Duels_lost]
                 ];
             },
             function(err) {
