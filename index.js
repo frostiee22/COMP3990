@@ -125,6 +125,19 @@ app.get('/api/pos/:val',function(req,res){
 })
 
 
+// retrieving the playes belonging to a coach team
+app.get('/api/coach/players/:coachid',function(req,res){
+	var coachid = req.param("coachid");
+	connection.query('SELECT * FROM `playeravg`WHERE playeravg.Player_ID in (SELECT Player_ID from player, team WHERE team.Coach_ID = '+ coachid +' and team.Team_ID = player.Team_ID)', function(err, rows) {
+        if (err) {
+            return err;
+        } else 
+            res.json(rows);
+        }
+    });
+})
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // getting data from forms
 
