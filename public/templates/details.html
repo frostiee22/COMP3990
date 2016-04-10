@@ -2,9 +2,8 @@
     <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="PLayerDetailsCtrl">
 
         <div class="item item-text-wrap">
-            <canvas id="line" class="chart chart-radar" data="data" labels="labels" legend="true" series="series" options="{pointDot : true}"></canvas>
+            <canvas id="line" class="chart chart-radar" data="data" labels="labels" legend="true" series="series" chart-options="{pointDot : true}"></canvas>
         </div>
-
             
         <div class="list card" ng-repeat="store in stores">
             <div class="item item-divider">{{store.name}}</div>
@@ -14,22 +13,6 @@
             <div class="item item-body">Goals : {{store.Goals}}</div>
             <div class="item item-body"></div>            
         </div>
-
-
-
-
-        <!--/////////////////////////////////////////////////////-->
-
-
-        
-
-
-
-        <!--////////////////////////////////////////////////////-->
-
-
-
-
 
     </ion-content>
 </ion-view>

@@ -1,16 +1,25 @@
 <ion-view title="Home ">
     <ion-content overflow-scroll="true" padding="true" class="has-header" ng-controller="homeCtrl">
+        <ion-refresher pulling-text="Pull to refresh..." on-refresh="RefreshHome()">
+        </ion-refresher>
+
         <div class="item item-divider">
             Position Averages
         </div>
         <div class="item item-text-wrap">
-            <canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" series="series" options="{showTooltips: true}"></canvas>
+            <canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" series="series" chart-options="{showTooltips: true}"></canvas>
         </div>
+        
+        
         <div class="spacer" style="width: 283px; height: 62px;"></div>
-        <h2>Top Players</h2>
-        <div class="list card">
-            <div class="item item-divider">Card</div>
-            <div class="item item-body"></div>
+        
+        
+        <div class="item item-divider">
+            Most Used Players
         </div>
+        <div class="item item-text-wrap">
+            <canvas id="line" class="chart chart-bar" data="data2" labels="labels2" legend="true" series="series2" chart-options="{showTooltips: true}"></canvas>
+        </div>
+        
     </ion-content>
 </ion-view>

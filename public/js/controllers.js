@@ -360,9 +360,24 @@ angular.module('app.controllers', [])
             console.log(item.Coach_ID);
             CoachPlayers.all().then(
                 function(res) {
-                    //console.log(res)
-                    var formation = [1,3,3,3];
-                    $scope.team = bestTeam(res,formation);
+                    if (res != []) {
+                        console.log(res);
+                        if ($scope.sel != null) {
+                            var formation = [[1, 3, 3, 3], [1, 4, 3, 2], [1, 3, 4, 2]];
+                            var team = bestTeam(res, formation[$scope.sel - 1]);
+                            $scope.team = team.team;
+                            $scope.response = "Missing Players";
+                            $scope.k = team.k;
+                            $scope.d = team.d;
+                            $scope.m = team.m;
+                            $scope.a = team.a;
+                        } else {
+                            $scope.response = "Select a formation";
+                        }
+                    } else {
+                        $scope.response = "No Players!";
+                    }
+
                 },
                 function(err) {
                     console.error(err);
@@ -371,9 +386,9 @@ angular.module('app.controllers', [])
         }
     }])
 
-    .controller('homeCtrl', ['$scope', '$http', 'TopGoals', function($scope, $http, TopGoals) {
+    .controller('homeCtrl', ['$scope', '$http', 'ExpAvg', 'MostUsed', function($scope, $http, ExpAvg, MostUsed) {
         console.log("homeCtrl");
-        TopGoals.all().then(
+        ExpAvg.all().then(
             function(stats) {
                 //$scope.labels = ['Goals','Successful Passesc','Unsuccessful Passes'];
                 $scope.labels = ['1', '2', '3', '4', '5', '6'];
@@ -389,6 +404,65 @@ angular.module('app.controllers', [])
                 console.error(err);
             }
         );
+        
+        MostUsed.all().then(
+            function(stats) {
+                //$scope.labels = ['Goals','Successful Passesc','Unsuccessful Passes'];
+                $scope.labels2 = ['Games Played'];
+                $scope.series2 = [stats[0].name, stats[1].name, stats[2].name, stats[3].name, stats[4].name];
+                $scope.data2 = [
+                    [stats[0].amtplayed],
+                    [stats[1].amtplayed],
+                    [stats[2].amtplayed],
+                    [stats[3].amtplayed],
+                    [stats[4].amtplayed]  
+                ];
+            },
+            function(err) {
+                console.error(err);
+            }
+        );
+        
+        
+        $scope.RefreshHome = function(){
+             ExpAvg.all().then(
+            function(stats) {
+                //$scope.labels = ['Goals','Successful Passesc','Unsuccessful Passes'];
+                $scope.labels = ['1', '2', '3', '4', '5', '6'];
+                $scope.series = ['Goalkeeper', 'Defender', 'Midfielder', 'Attacker'];
+                $scope.data = [
+                    [stats[0].Goals, stats[0].Total_Successful_Passes_All, stats[0].Total_Unsuccessful_Passes_All, stats[0].Touches, stats[0].Duels_won, stats[0].Duels_lost],
+                    [stats[1].Goals, stats[1].Total_Successful_Passes_All, stats[1].Total_Unsuccessful_Passes_All, stats[1].Touches, stats[1].Duels_won, stats[1].Duels_lost],
+                    [stats[2].Goals, stats[2].Total_Successful_Passes_All, stats[2].Total_Unsuccessful_Passes_All, stats[2].Touches, stats[2].Duels_won, stats[2].Duels_lost],
+                    [stats[3].Goals, stats[3].Total_Successful_Passes_All, stats[3].Total_Unsuccessful_Passes_All, stats[3].Touches, stats[3].Duels_won, stats[3].Duels_lost]
+                ];
+            },
+            function(err) {
+                console.error(err);
+            }
+        );
+        
+        MostUsed.all().then(
+            function(stats) {
+                //$scope.labels = ['Goals','Successful Passesc','Unsuccessful Passes'];
+                $scope.labels2 = ['Games Played'];
+                $scope.series2 = [stats[0].name, stats[1].name, stats[2].name, stats[3].name, stats[4].name];
+                $scope.data2 = [
+                    [stats[0].amtplayed],
+                    [stats[1].amtplayed],
+                    [stats[2].amtplayed],
+                    [stats[3].amtplayed],
+                    [stats[4].amtplayed]  
+                ];
+            },
+            function(err) {
+                console.error(err);
+            }
+        );
+        }
+        
+        
+
     }])
 
 

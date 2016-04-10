@@ -41,8 +41,8 @@
             </label>
         </form>
 
-
-        <div class="list card" collection-repeat="item in items | filter:searchText" ng-model="item.name" ui-sref="tabsController.details"
+         <!--collection-repeat  -->
+        <div class="list card" ng-repeat="item in items | filter:searchText" ng-model="item.name" ui-sref="tabsController.details"
         ng-click="details()" on-hold="openPopover($event)">
             <div class="item item-avatar">
                 <img src="img/person.png">

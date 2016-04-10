@@ -6,31 +6,55 @@
                     <span class="input-label">Coach ID</span>
                     <input type="text" name="coachid" placeholder="Coach ID" ng-model="Coach_ID">
                 </label>
+                <div class="list">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Formation
+                        </div>
+                        <select ng-model="sel">
+                            <option value="1" selected>1gk,3def,3mid,3atk</option>
+                            <option value="2">1gk,4def,3mid,2atk</option>
+                            <option value="3">1gk,3def,4mid,2atk</option>
+                        </select>
+                    </label>
+                </div>
 
                 <button class="button button-block button-positive">
                     Get Best Team
                 </button>
             </div>
         </form>
-        
+
         <div class="list card">
             <div class="item item-text-wrap">
                 <h2>Team</h2>
             </div>
         </div>
-        <div class="list card" collection-repeat="player in team | filter:searchText" ng-model="team">
+        <div class="list card" ng-repeat="player in team | filter:searchText" ng-model="team">
             <div class="item item-avatar">
                 <img src="img/person.ico">
                 <h3>{{player.name}}</h3>
                 <p>{{player.pos}}</p>
             </div>
         </div>
-        
+
 
 
         <div class="card">
             <div class="item item-text-wrap">
                 Response: <b ng-bind="response"></b>
+            </div>
+            <div class="item item-text-wrap">
+                Keeper : <b ng-bind="k"></b>
+            </div>
+            <div class="item item-text-wrap">
+                Defender: <b ng-bind="d"></b>
+            </div>
+            <div class="item item-text-wrap">
+                Midfielder: <b ng-bind="m"></b>
+            </div>
+            <div class="item item-text-wrap">
+                Attacker: <b ng-bind="a"></b>
             </div>
         </div>
     </ion-content>

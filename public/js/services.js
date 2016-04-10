@@ -108,7 +108,7 @@ angular.module('app.services', [])
     })
 
 
-    .factory('TopGoals', function($http, $timeout, $q) {
+    .factory('ExpAvg', function($http, $timeout, $q) {
         var results = {};
 
         function _all() {
@@ -120,14 +120,36 @@ angular.module('app.services', [])
                     d.resolve(response);
                 })
                 .error(function(data) {
-                    alert("Unable to fetch");
-                    console.log("Unable to fetch");
+                   console.log(data);
                 });
             return d.promise;
         }
         results.all = _all;
         return results;
     })
+    
+    
+    // most used players
+    .factory('MostUsed', function($http, $timeout, $q) {
+        var results = {};
+        function _all() {
+            var d = $q.defer();
+            $http
+                .get("http://uwiproject.herokuapp.com/api/mostusedplayer/5")
+                .success(function(response) {
+                    d.resolve(response);
+                })
+                .error(function(data) {
+                    console.log(data);
+                });
+            return d.promise;
+        }
+        results.all = _all;
+        return results;
+    })
+    
+    
+    
 
     .factory('SimpleData', function($http, $timeout, $q) {
         var results = {};
@@ -420,22 +442,48 @@ function bestTeam(Players, formation) {
     var mTeam = bestMidfielder(midfieldersData, data);
     var aTeam = bestAttacker(attackersData, data);
 
-    var team = [],i;
+    var team = [],i=0,k=0,d=0,m=0,a=0;
     team.k = [], team.d = [], team.m = [], team.a = [];
     
-    for (i = 0; i < formation[0]; i++)
+    for (i = 0; i < formation[0] && i < kTeam.length; i++){
         team.push(kTeam[i]);
+    }
+    if (i<formation[0]){
+        k = formation[0] -i ;
+    }else
+        
 
-    for (i = 0; i < formation[1]; i++)
+    for (i = 0; i < formation[1] && i < dTeam.length; i++){
         team.push(dTeam[i]);
+    } 
+    if (i<formation[1]){
+        d = formation[1] -i ;
+    }
 
-    for (i = 0; i < formation[2]; i++)
+    for (i = 0; i < formation[2] && i < mTeam.length; i++){
         team.push(mTeam[i]);
-
-    for (i = 0; i < formation[3]; i++)
+    }
+    if (i<formation[2]){
+        m = formation[2] -i ;
+    }
+       
+    for (i = 0; i < formation[3] && i < aTeam.length; i++){
         team.push(aTeam[i]);
+    }
+    if (i<formation[3]){
+        a = formation[3] -i ;
+    }
+    
+    var obj = {}
+    obj.team = team;
+    var value = 11 - team.length;
+    obj.err = value;
+    obj.k = k;
+    obj.d = d;
+    obj.m = m;
+    obj.a = a;
 
-    return team;
+    return obj;
 
 
 }
