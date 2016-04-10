@@ -32,6 +32,20 @@ app.get('/api/stats/all', function(req, res) {
     res.json(DBACCESS.allData());
 });
 
+
+//most used player
+app.get('/api/mostusedplayer/:amt', function(req, res) {
+    var amt = req.param("amt");
+    connection.query("SELECT * FROM `playeravg` ORDER BY amtplayed ASC" , function(err, rows) {
+            if (err) {
+                return err;
+            } else {
+                res.json(rows);
+            }
+        });
+});
+
+
 app.get('/api/stats/players', function(req, res) {
     connection.query("SELECT DISTINCT Player_ID, Player_Forename , Player_Surname from stats ORDER BY `stats`.`Player_Surname` ASC", function(err, rows) {
         if (err)
