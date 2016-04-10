@@ -36,7 +36,7 @@ app.get('/api/stats/all', function(req, res) {
 //most used player
 app.get('/api/mostusedplayer/:amt', function(req, res) {
     var amt = req.param("amt");
-    connection.query("SELECT * FROM `playeravg` ORDER BY amtplayed ASC" , function(err, rows) {
+    connection.query("SELECT * FROM `playeravg` ORDER BY amtplayed DESC limit " + amt, function(err, rows) {
             if (err) {
                 return err;
             } else {
