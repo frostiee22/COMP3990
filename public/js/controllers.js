@@ -363,7 +363,7 @@ angular.module('app.controllers', [])
                     if (res != []) {
                         console.log(res);
                         if ($scope.sel != null) {
-                            var formation = [[1, 3, 3, 3], [1, 4, 3, 2], [1, 3, 4, 2]];
+                            var formation = [[1, 4, 3, 3], [1, 3, 4, 3], [1, 3, 4, 3],[1,3,5,2]];
                             var team = bestTeam(res, formation[$scope.sel - 1]);
                             $scope.team = team.team;
                             $scope.response = "Missing Players";
